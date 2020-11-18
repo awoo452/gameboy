@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="UTF-8">
+        
+        <title>Gameboy DMG-001</title>
+        
+        <link rel="stylesheet" href="appname.css">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!--FontAwesome CSS file-->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    </head>
+
+
+    <body>
+
+        <div class="container-fluid mt-4">
+            
+            <div class="row">
+                <div class="col mt-4">
+                    <div class="offOnContainer mx-auto">
+                        <button onclick="toggleOnOff()" class="offOnButton off" id="onOffButton"></button>
+                    </div>
+                    <div class="frame mx-auto">
+                        
+                        <div class="col-10 topLines mx-auto pl-1">
+                            <div class="offOn">
+                                <h6 class="offOnLetters"><i class="fas fa-caret-left"></i> OFF • ON <i class="fas fa-caret-right"></i></h6>
+                            </div>
+                        </div>
+                        <hr class='topLine mt-0'>
+                        <div class="screen mx-auto">
+                            <div class="dotMatrix pl-1 pr-1">
+                                <h6 class="dotMatrixText mb-0">DOT MATRIX WITH STEREO SOUND</h6>
+                            </div>
+                            <div class="matrixLineTop mt-3 mb-1 mx-auto"></div>
+                            <div class="matrixLineBottom mb-3 mx-auto"></div>
+                            
+                            <div class="batteryContainer">
+                                <div class="batteryLightContainer">
+                                    <div class="batteryLight batteryLightOff" id="batteryLight"></div>
+                                </div>
+                                <div class="batteryTextContainer">
+                                    <h6 class="batteryText">BATTERY</h6>
+                                </div>
+                            </div>
+
+                            <div class="display displayOff" id="display">
+                                <div class="nintendoLogoContainer" id="nintendoLogoContainer">
+                                    <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <img class="nintendoGameBoy" src="img/nintendogameboy.png">
+
+                        <div class="controlsContainer">
+                            <div class="dPad">
+                                <div class="caretUpContainer">
+                                    <div class="fa fa-caret-up"></div>
+                                </div>
+                                <button class="dPadUp"></button>
+                                <div class="caretDownContainer">
+                                    <div class="fa fa-caret-down"></div>
+                                </div>
+                                <button class="dPadDown"></button>
+                                <div class="caretLeftContainer">
+                                    <div class="fa fa-caret-left"></div>
+                                </div>
+                                <button class="dPadLeft"></button>
+                                <div class="caretRightContainer">
+                                    <div class="fa fa-caret-right"></div>
+                                </div>
+                                <button class="dPadRight"></button>
+                                <div class="dPadCenter"></div>
+                            </div>
+
+                            
+
+                            <div class="selectStart">
+                                <div class="select">
+                                    <button class="selectButton"></button>
+                                    <h6 class="selectText">SELECT</h6>
+                                </div>
+                                <div class="start">
+                                    <button class="startButton"></button>
+                                    <h6 class="startText">START</h6>
+                                </div>
+                            </div>
+
+                            <div class="bAContainer">
+                                <div class="bAButtonContainer">
+                                    <button class='bButton'></button>
+                                    <button class="aButton"></button>
+                                </div>
+                                <div class="bContainer">
+                                    <h6 class="b">B</h6>
+                                </div>
+                                <div class="aContainer">
+                                    <h6 class="a">A</h6>
+                                </div>
+                            </div>
+
+                            <div class="speakerContainer">
+                                <div class="line"></div>
+                                <div class="line">
+                                    <div class="hole"></div>
+                                </div>
+                                <div class="line">
+                                    <div class="hole"></div>
+                                </div>
+                                <div class="line">
+                                    <div class="hole"></div>
+                                </div>
+                                <div class="line">
+                                    <div class="hole"></div>
+                                </div>
+                                <div class="line">
+                                    <div class="hole"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--app.js-->
+        <script src="appname.js" charset="utf-8"></script>
+        <!--JQuery-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <!--Popper-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <!--Bootstrap JS-->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+    </body>
+
+</html>

@@ -1,0 +1,565 @@
+    /* ----- GENERAL CSS ----- */
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+:root {
+    --gameboyScreen: rgb(100, 100, 100);
+    --gameboyShell: rgb(200, 200, 200);
+    --offOn: rgb(175, 175, 175);
+    --offOnBorder: rgb(85, 85, 85);
+    --offOnText: rgb(200, 200, 200);
+    --topLines: rgb(148, 148, 148);
+    --matrixLineTop: rgb(145, 54, 122);
+    --matrixLineBottom: blue;
+    --batteryLightOff: black;
+    --batteryLightOn: red;
+    --dPad: black;
+    --dPadBorder: rgb(56, 56, 56);
+    --dPadCaret: rgb(182, 182, 182);
+    --aButton: rgb(114, 43, 96);
+    --bButton: rgb(114, 43, 96);
+    --selectButton: gray;
+    --startButton: gray;
+    --selectButtonBorder: darkslategray;
+    --startButtonBorder: darkslategray;
+    --selectText: darkblue;
+    --startText: darkblue;
+    --b: darkblue;
+    --a: darkblue;
+    --shade: rgb(182, 182, 182);
+    --speakerGroove: rgb(150, 150, 150);
+    --speakerGrooveBorder: rgb(88, 88, 88);
+    --displayOff: rgb(44, 88, 23);
+    --displayOn: rgb(55, 110, 30);
+}
+
+body {
+    background-color: darkslategrey!important;
+    font-family: 'Oswald', sans-serif!important;
+    text-align: center;
+}
+
+
+button {
+    border: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: white;
+}
+
+.awblue {
+    color: rgb(45, 105, 215);
+}
+
+.clear {
+    all: unset;
+}
+
+    /* ----- GAMEBOY SHELL ----- */
+
+.frame {
+    margin-top: 6px;
+    height: 630px;
+    width: 400px;
+    border-radius: 10px 10px 30px 10px;
+    background-color: var(--gameboyShell);
+}
+
+.topLines {
+    display: flex;
+    border-left: 3px var(--topLines) solid;
+    border-right: 3px var(--topLines) solid;
+    height: 15px;
+}
+
+.offOnContainer {
+    width: 400px;
+}
+
+.offOnButton {
+    position: absolute;
+    height: 6px;
+    max-width: 10px;
+    background-color: var(--offOn);
+}
+
+.offOnButton:focus {
+    outline: none;
+}
+
+.on {
+    margin-left: 65px;
+}
+
+.off {
+    margin-left: 45px;
+}
+
+.offOn {
+    width: 50px;
+    height: 13px;
+    background-color: var(--offOn);
+    border: 1px var(--offOnBorder) solid;
+    border-radius: 6px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+}
+
+.offOnLetters {
+    color: var(--offOnText);
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.topLine {
+    height: 2px;
+    background-color: var(--topLines);
+    width: 100%;
+}
+
+    /* ----- SCREEN AND DISPLAY ----- */
+
+/* ----- SCREEN ----- */
+.screen {
+    width: 330px;
+    height: 270px;
+    border-radius: 5px 5px 30px 5px;
+    border: 1px solid black;
+    background-color: var(--gameboyScreen);
+}
+
+.dotMatrix {
+    position: absolute;
+    margin-top: 13px;
+    margin-left: 159px;
+    background-color: var(--gameboyScreen);
+}
+
+.dotMatrixText {
+    font-size: 10px;
+}
+
+.matrixLineTop {
+    width: 90%;
+    background-color: var(--matrixLineTop);
+    height: 1px;
+}
+
+.matrixLineBottom {
+    width: 90%;
+    background-color: var(--matrixLineBottom);
+    height: 1px;
+}
+
+.batteryContainer {
+    position: absolute;
+    margin-top: 70px;
+    width: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    justify-content: center;
+}
+
+.batteryLightContainer {
+    display: flex;
+    width: 45px;
+    flex: 100%;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+
+.batteryLight {
+    height: 6px;
+    width: 6px;
+    background-color: var(--batteryLight);
+    border-radius: 50%;
+}
+
+.batteryLightOff {
+    background-color: var(--batteryLightOff);
+}
+
+.batteryLightOn {
+    background-color: var(--batteryLightOn);
+}
+
+.batteryText {
+    font-size: 10.5px;
+}
+
+/* ----- DISPLAY ----- */
+
+.display {
+    width: 240px;
+    height: 200px;
+    margin: auto;
+}
+
+.displayOff {
+    background-color: var(--displayOff);
+}
+
+.displayOn {
+    background-color: var(--displayOn);
+}
+
+.nintendoLogoContainer {
+    display: flex; 
+    justify-content: center;
+}
+
+.nintendoLogoContainerPadding {
+    padding-top: 85px;
+}
+
+.drop {
+    animation-name: nintendoLogoDrop;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes nintendoLogoDrop {
+    from {
+      padding-top: 0px;
+    }
+    to {
+      padding-top: 85px;
+    }
+  }
+
+.hidden {
+    display: none;
+}
+
+.nintendoLogo {
+    width: 50%;
+    height: 50%;
+    
+}
+
+.controlsContainer {
+    width: 400px;
+    height: 297px;
+}
+
+.nintendoGameBoy {
+    max-width: 200px;
+    margin-left: 35px;
+    margin-top: 10px;
+}
+
+.introduction {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.displayText {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: black;
+}
+
+    /* ----- CONTROLS ----- */
+
+/* ----- D PAD ----- */
+.dPad {
+    position: absolute;
+    height: 106px;
+    width: 106px;
+    margin-left: 39px;
+    margin-top: 39px;
+}
+
+.dPadUp {
+    position: absolute;
+    height: 35px;
+    width: 26px;
+    background-color: var(--dPad);
+    margin-left: 40px;
+    margin-top: 6px;
+    border-radius: 5px 5px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+}
+
+.dPadUp:focus {
+    outline: none;
+}
+
+.dPadDown {
+    position: absolute;
+    height: 35px;
+    width: 26px;
+    background-color: var(--dPad);
+    margin-left: 40px;
+    margin-top: 65px;
+    border-radius: 0 0 5px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+}
+
+.dPadDown:focus {
+    outline: none;
+}
+
+.dPadLeft {
+    position: absolute;
+    height: 26px;
+    width: 35px;
+    background-color: var(--dPad);
+    margin-top: 40px;
+    margin-left: 6px;
+    border-radius: 5px 0 0 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.dPadLeft:focus {
+    outline: none;
+}
+
+.dPadRight {
+    position: absolute;
+    height: 26px;
+    width: 35px;
+    background-color: var(--dPad);
+    margin-left: 65px;
+    margin-top: 40px;
+    border-radius: 0 5px 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.dPadRight:focus {
+    outline: none;
+}
+
+.dPadCenter {
+    height: 25px;
+    width: 25px;
+    background-color: var(--dPad);
+    margin-left: 41px;
+    margin-top: 41px;
+
+}
+
+.caretUpContainer {
+    position: absolute;
+    margin-left: 47px;
+    margin-top: -15px;
+}
+
+.fa-caret-up {
+    color: var(--dPadCaret);
+}
+
+.caretDownContainer {
+    position: absolute;
+    margin-left: 47px;
+    margin-top: 95px;
+}
+
+.fa-caret-down {
+    color: var(--dPadCaret);
+}
+
+.caretLeftContainer {
+    position: absolute;
+    margin-left: -5px;
+    margin-top: 40px;
+}
+
+.fa-caret-left {
+    color: var(--dPadCaret);
+}
+
+.caretRightContainer {
+    position: absolute;
+    margin-left: 107px;
+    margin-top: 40px;
+}
+
+.fa-caret-right {
+    color: var(--dPadCaret);
+}
+
+
+/* ----- START AND SELECT ----- */
+
+.selectStart {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 100;
+    justify-content: space-between;
+    margin-left: 145px;
+    margin-top: 150px;
+    height: 85px;
+    width: 110px;
+    transform: rotate(-25deg);
+}
+
+.select {
+    
+}
+
+.selectButton {
+    flex: 50%;
+    width: 45px;
+    height: 9px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: var(--selectButton);
+    border: 2px solid var(--startButtonBorder);
+}
+
+.selectButton:focus {
+    outline: none;
+}
+
+.selectText {
+    font-size: 10px;
+    text-align: center;
+    color: var(--selectText);
+    font-family: 'Syncopate', sans-serif;
+}
+
+.start {
+    margin-top: 28px;
+}
+
+.startButton {
+    flex: 50%;
+    align-self: center;
+    width: 45px;
+    height: 9px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: var(--startButton);
+    border: 2px solid var(--startButtonBorder);
+}
+
+.startButton:focus {
+    outline: none;
+}
+
+.startText {
+    font-size: 10px;
+    text-align: center;
+    color: var(--startText);
+    font-family: 'Syncopate', sans-serif;
+}
+
+/* ----- A & B BUTTONS ----- */
+
+.bAContainer {
+    position: absolute;
+    margin-left: 260px;
+    margin-top: 57px;
+    width: 115px;
+    display: flex;
+    transform: rotate(-25deg);
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex-basis: 100%;
+    
+}
+
+.bAButtonContainer {
+    display: flex;
+    flex: 100%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid var(--shade);
+    border-radius: 50px;
+}
+
+.bContainer {
+    display: flex;
+    flex: 50%;
+    justify-content: center;
+}
+
+.bButton {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background-color: var(--bButton);
+}
+
+.bButton:focus {
+    outline: none;
+}
+
+.b {
+    font-size: 15px;
+    color: var(--b);
+    font-family: 'Syncopate', sans-serif;
+}
+
+.aContainer {
+    display: flex;
+    flex: 50%;
+    justify-content: center;
+}
+
+.aButton {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background-color: var(--aButton);
+}
+
+.aButton:focus {
+    outline: none;
+}
+
+.a {
+    font-size: 15px;
+    color: var(--a);
+    font-family: 'Syncopate', sans-serif;
+}
+
+/* ----- SPEAKER HOLE ----- */
+
+.speakerContainer {
+    position: absolute;
+    margin-left: 259px;
+    margin-top: 198px;
+    width: 140px;
+    height: 80px;
+    transform: rotate(-25deg);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.line {
+    height: 90%;
+    width: 6%;
+    border-radius: 5px;
+    background-color: var(--speakerGroove);
+    border: 1px solid var(--speakerGrooveBorder);
+}
+
+.hole {
+    height: 85%;
+    width:75%;
+    border-radius: 5px;
+    background-color: black;
+}
+

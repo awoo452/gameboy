@@ -1,0 +1,25 @@
+:root {
+    --displayBackground: rgb(55, 110, 30);
+    --cartridgeColor: rgb(148, 148, 148);
+}
+
+.introductionDisplay {
+    width: 240px;
+    height: 200px;
+    margin: auto;
+    background-color: var(--displayBackground);
+}
+
+.introductionCartridgeContainer {
+    width: 270px;
+    height: 285px;
+    margin: auto;
+    background-color: var(--cartridgeColor);
+}
+
+.introductionCartridge {
+    width: 270px;
+        height: 285px;
+        margin: auto;
+        background-color: var(--cartridgeColor);
+}
