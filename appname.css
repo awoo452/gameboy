@@ -15,13 +15,11 @@
     --batteryLightOff: black;
     --batteryLightOn: red;
     --dPad: black;
-    --dPadBorder: rgb(56, 56, 56);
     --dPadCaret: rgb(182, 182, 182);
     --aButton: rgb(114, 43, 96);
     --bButton: rgb(114, 43, 96);
     --selectButton: gray;
     --startButton: gray;
-    --selectButtonBorder: darkslategray;
     --startButtonBorder: darkslategray;
     --selectText: darkblue;
     --startText: darkblue;
@@ -48,18 +46,6 @@ button {
 .frame button:focus-visible {
     outline: 2px solid #1a1a1a;
     outline-offset: 2px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  color: white;
-}
-
-.awblue {
-    color: rgb(45, 105, 215);
-}
-
-.clear {
-    all: unset;
 }
 
     /* ----- GAMEBOY SHELL ----- */
@@ -191,7 +177,7 @@ h1, h2, h3, h4, h5, h6 {
 .batteryLight {
     height: 6px;
     width: 6px;
-    background-color: var(--batteryLight);
+    background-color: var(--batteryLightOff);
     border-radius: 50%;
 }
 
@@ -266,18 +252,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 10px;
 }
 
-.introduction {
-    display: flex;
-    align-self: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.displayText {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
-    color: black;
-}
 
     /* ----- CONTROLS ----- */
 
