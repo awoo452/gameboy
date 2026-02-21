@@ -1,36 +1,60 @@
-let offOnButton = document.querySelector('.offOnButton');
-function turnOn() {
-    offOnButton.classList.add('on');
-    offOnButton.classList.remove('off');
+const onOffButton = document.querySelector('#onOffButton');
+const batteryLight = document.querySelector('#batteryLight');
+const display = document.querySelector('#display');
+const nintendoLogoContainer = document.querySelector('#nintendoLogoContainer');
+const nintendoLogo = document.querySelector('#nintendoLogo');
+
+let bootTimeoutId = null;
+let screenTimeoutId = null;
+
+function isOn() {
+    return onOffButton.classList.contains('on');
 }
 
-let batteryLight = document.querySelector('#batteryLight');
+function turnOn() {
+    onOffButton.classList.add('on');
+    onOffButton.classList.remove('off');
+}
+
 function turnOnBatteryLight() {
     batteryLight.classList.remove('batteryLightOff');
     batteryLight.classList.add('batteryLightOn');
 }
 
-let display = document.querySelector('#display');
 function turnOnDisplay() {
     display.classList.remove('displayOff');
     display.classList.add('displayOn');
 }
 
-let nintendoLogoContainer = document.querySelector('#nintendoLogoContainer');
 function addDrop() {
+    if (!isOn()) {
+        return;
+    }
     nintendoLogoContainer.classList.add('drop');
 }
 
-let nintendoLogo = document.querySelector('#nintendoLogo');
 function startGame() {
+    if (!isOn()) {
+        return;
+    }
     nintendoLogo.classList.remove('hidden');
-    nintendoLogoContainer.classList.remove('nintendoLogoContainerPadding');
-    setTimeout(addDrop, 500);
+    bootTimeoutId = setTimeout(addDrop, 500);
+}
+
+function clearTimers() {
+    if (bootTimeoutId !== null) {
+        clearTimeout(bootTimeoutId);
+        bootTimeoutId = null;
+    }
+    if (screenTimeoutId !== null) {
+        clearTimeout(screenTimeoutId);
+        screenTimeoutId = null;
+    }
 }
 
 function turnOff() {
-    offOnButton.classList.add('off');
-    offOnButton.classList.remove('on');
+    onOffButton.classList.add('off');
+    onOffButton.classList.remove('on');
 }
 
 function turnOffBatteryLight() {
@@ -49,13 +73,15 @@ function removeInitialScreen() {
 }
 
 function toggleOnOff() {
-    if (offOnButton.classList.contains('off')) {
+    if (onOffButton.classList.contains('off')) {
+        clearTimers();
         turnOn();
         turnOnBatteryLight();
         turnOnDisplay();
-        setTimeout(startGame, 500);
-        setTimeout(nextScreen, 4500);
-    } else if (offOnButton.classList.contains('on')) {
+        bootTimeoutId = setTimeout(startGame, 500);
+        screenTimeoutId = setTimeout(nextScreen, 4500);
+    } else if (onOffButton.classList.contains('on')) {
+        clearTimers();
         turnOff();
         turnOffBatteryLight();
         turnOffDisplay();
@@ -64,9 +90,13 @@ function toggleOnOff() {
 }
 
 function nextScreen() {
+    if (!isOn()) {
+        return;
+    }
     nintendoLogo.classList.add('hidden');
     nintendoLogoContainer.classList.remove('drop');
 }
 
+onOffButton.addEventListener('click', toggleOnOff);
 
 

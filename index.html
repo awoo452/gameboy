@@ -25,19 +25,19 @@
             <div class="row">
                 <div class="col mt-4">
                     <div class="offOnContainer mx-auto">
-                        <button onclick="toggleOnOff()" class="offOnButton off" id="onOffButton"></button>
+                        <button class="offOnButton off" id="onOffButton" aria-label="Power switch"></button>
                     </div>
                     <div class="frame mx-auto">
                         
                         <div class="col-10 topLines mx-auto pl-1">
                             <div class="offOn">
-                                <h6 class="offOnLetters"><i class="fas fa-caret-left"></i> OFF • ON <i class="fas fa-caret-right"></i></h6>
+                                <span class="offOnLetters"><i class="fas fa-caret-left" aria-hidden="true"></i> OFF • ON <i class="fas fa-caret-right" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <hr class='topLine mt-0'>
                         <div class="screen mx-auto">
                             <div class="dotMatrix pl-1 pr-1">
-                                <h6 class="dotMatrixText mb-0">DOT MATRIX WITH STEREO SOUND</h6>
+                                <span class="dotMatrixText mb-0">DOT MATRIX WITH STEREO SOUND</span>
                             </div>
                             <div class="matrixLineTop mt-3 mb-1 mx-auto"></div>
                             <div class="matrixLineBottom mb-3 mx-auto"></div>
@@ -47,38 +47,38 @@
                                     <div class="batteryLight batteryLightOff" id="batteryLight"></div>
                                 </div>
                                 <div class="batteryTextContainer">
-                                    <h6 class="batteryText">BATTERY</h6>
+                                    <span class="batteryText">BATTERY</span>
                                 </div>
                             </div>
 
                             <div class="display displayOff" id="display">
                                 <div class="nintendoLogoContainer" id="nintendoLogoContainer">
-                                    <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png">
+                                    <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png" alt="Nintendo logo">
                                 </div>
                             </div>
 
                         </div>
 
-                        <img class="nintendoGameBoy" src="img/nintendogameboy.png">
+                        <img class="nintendoGameBoy" src="img/nintendogameboy.png" alt="Nintendo Game Boy logo">
 
                         <div class="controlsContainer">
                             <div class="dPad">
                                 <div class="caretUpContainer">
-                                    <div class="fa fa-caret-up"></div>
+                                    <div class="fa fa-caret-up" aria-hidden="true"></div>
                                 </div>
-                                <button class="dPadUp"></button>
+                                <button class="dPadUp" aria-label="D-pad up"></button>
                                 <div class="caretDownContainer">
-                                    <div class="fa fa-caret-down"></div>
+                                    <div class="fa fa-caret-down" aria-hidden="true"></div>
                                 </div>
-                                <button class="dPadDown"></button>
+                                <button class="dPadDown" aria-label="D-pad down"></button>
                                 <div class="caretLeftContainer">
-                                    <div class="fa fa-caret-left"></div>
+                                    <div class="fa fa-caret-left" aria-hidden="true"></div>
                                 </div>
-                                <button class="dPadLeft"></button>
+                                <button class="dPadLeft" aria-label="D-pad left"></button>
                                 <div class="caretRightContainer">
-                                    <div class="fa fa-caret-right"></div>
+                                    <div class="fa fa-caret-right" aria-hidden="true"></div>
                                 </div>
-                                <button class="dPadRight"></button>
+                                <button class="dPadRight" aria-label="D-pad right"></button>
                                 <div class="dPadCenter"></div>
                             </div>
 
@@ -86,25 +86,25 @@
 
                             <div class="selectStart">
                                 <div class="select">
-                                    <button class="selectButton"></button>
-                                    <h6 class="selectText">SELECT</h6>
+                                    <button class="selectButton" aria-label="Select button"></button>
+                                    <span class="selectText">SELECT</span>
                                 </div>
                                 <div class="start">
-                                    <button class="startButton"></button>
-                                    <h6 class="startText">START</h6>
+                                    <button class="startButton" aria-label="Start button"></button>
+                                    <span class="startText">START</span>
                                 </div>
                             </div>
 
                             <div class="bAContainer">
                                 <div class="bAButtonContainer">
-                                    <button class='bButton'></button>
-                                    <button class="aButton"></button>
+                                    <button class='bButton' aria-label="B button"></button>
+                                    <button class="aButton" aria-label="A button"></button>
                                 </div>
                                 <div class="bContainer">
-                                    <h6 class="b">B</h6>
+                                    <span class="b">B</span>
                                 </div>
                                 <div class="aContainer">
-                                    <h6 class="a">A</h6>
+                                    <span class="a">A</span>
                                 </div>
                             </div>
 
@@ -138,12 +138,6 @@
 
         <!--app.js-->
         <script src="appname.js" charset="utf-8"></script>
-        <!--JQuery-->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <!--Popper-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <!--Bootstrap JS-->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         
     </body>
 

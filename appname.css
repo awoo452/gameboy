@@ -1,7 +1,6 @@
     /* ----- GENERAL CSS ----- */
 * {
     box-sizing: border-box;
-    outline: none;
 }
 
 :root {
@@ -46,6 +45,11 @@ button {
     border: none;
 }
 
+.frame button:focus-visible {
+    outline: 2px solid #1a1a1a;
+    outline-offset: 2px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: white;
 }
@@ -84,10 +88,16 @@ h1, h2, h3, h4, h5, h6 {
     height: 6px;
     max-width: 10px;
     background-color: var(--offOn);
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.offOnButton:focus {
+.offOnButton:focus,
+.offOnButton:focus-visible,
+.offOnButton:active {
     outline: none;
+    box-shadow: none;
 }
 
 .on {
@@ -115,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 11px;
     text-align: center;
     margin-bottom: 0;
+    display: block;
 }
 
 .topLine {
@@ -143,6 +154,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .dotMatrixText {
     font-size: 10px;
+    color: white;
+    display: block;
 }
 
 .matrixLineTop {
@@ -192,6 +205,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .batteryText {
     font-size: 10.5px;
+    color: white;
+    display: block;
 }
 
 /* ----- DISPLAY ----- */
@@ -213,10 +228,6 @@ h1, h2, h3, h4, h5, h6 {
 .nintendoLogoContainer {
     display: flex; 
     justify-content: center;
-}
-
-.nintendoLogoContainerPadding {
-    padding-top: 85px;
 }
 
 .drop {
@@ -292,10 +303,6 @@ h1, h2, h3, h4, h5, h6 {
     align-content: space-evenly;
 }
 
-.dPadUp:focus {
-    outline: none;
-}
-
 .dPadDown {
     position: absolute;
     height: 35px;
@@ -307,10 +314,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     align-content: space-evenly;
-}
-
-.dPadDown:focus {
-    outline: none;
 }
 
 .dPadLeft {
@@ -326,10 +329,6 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: space-evenly;
 }
 
-.dPadLeft:focus {
-    outline: none;
-}
-
 .dPadRight {
     position: absolute;
     height: 26px;
@@ -341,10 +340,6 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-}
-
-.dPadRight:focus {
-    outline: none;
 }
 
 .dPadCenter {
@@ -426,15 +421,12 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid var(--startButtonBorder);
 }
 
-.selectButton:focus {
-    outline: none;
-}
-
 .selectText {
     font-size: 10px;
     text-align: center;
     color: var(--selectText);
     font-family: 'Syncopate', sans-serif;
+    display: block;
 }
 
 .start {
@@ -452,15 +444,12 @@ h1, h2, h3, h4, h5, h6 {
     border: 2px solid var(--startButtonBorder);
 }
 
-.startButton:focus {
-    outline: none;
-}
-
 .startText {
     font-size: 10px;
     text-align: center;
     color: var(--startText);
     font-family: 'Syncopate', sans-serif;
+    display: block;
 }
 
 /* ----- A & B BUTTONS ----- */
@@ -501,14 +490,11 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--bButton);
 }
 
-.bButton:focus {
-    outline: none;
-}
-
 .b {
     font-size: 15px;
     color: var(--b);
     font-family: 'Syncopate', sans-serif;
+    display: block;
 }
 
 .aContainer {
@@ -524,14 +510,11 @@ h1, h2, h3, h4, h5, h6 {
     background-color: var(--aButton);
 }
 
-.aButton:focus {
-    outline: none;
-}
-
 .a {
     font-size: 15px;
     color: var(--a);
     font-family: 'Syncopate', sans-serif;
+    display: block;
 }
 
 /* ----- SPEAKER HOLE ----- */
@@ -562,4 +545,3 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 5px;
     background-color: black;
 }
-
