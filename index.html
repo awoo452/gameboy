@@ -8,11 +8,13 @@
         <title>Gameboy DMG-001</title>
         
         <link rel="stylesheet" href="appname.css">
+        <meta name="pokemon-api-base" content="https://pokemon-api-03a0e8d55140.herokuapp.com">
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!--FontAwesome CSS file-->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
     </head>
 
@@ -53,6 +55,57 @@
                             <div class="display displayOff" id="display">
                                 <div class="nintendoLogoContainer" id="nintendoLogoContainer">
                                     <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png" alt="Nintendo logo">
+                                </div>
+                                <div class="screenContent hidden" id="screenContent" aria-live="polite">
+                                    <div class="screenHeader">
+                                        <span class="screenTitle">POKEDEX</span>
+                                        <span class="screenBadge">DMG</span>
+                                    </div>
+                                    <div class="menu" id="menu">
+                                        <button class="menuItem is-selected" data-action="random" type="button">
+                                            <span class="menuArrow">></span>
+                                            <span class="menuLabel">FETCH RANDOM</span>
+                                        </button>
+                                        <button class="menuItem" data-action="about" type="button">
+                                            <span class="menuArrow">></span>
+                                            <span class="menuLabel">ABOUT</span>
+                                        </button>
+                                    </div>
+                                    <div class="statusRow">
+                                        <span class="statusText" id="statusText"></span>
+                                    </div>
+                                    <div class="pokemonCard hidden" id="pokemonCard">
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">NO.</span>
+                                            <span class="rowValue" id="pokemonId"></span>
+                                        </div>
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">NAME</span>
+                                            <span class="rowValue" id="pokemonName"></span>
+                                        </div>
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">TYPE</span>
+                                            <span class="rowValue" id="pokemonTypes"></span>
+                                        </div>
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">HT/WT</span>
+                                            <span class="rowValue" id="pokemonHW"></span>
+                                        </div>
+                                    </div>
+                                    <div class="aboutCard hidden" id="aboutCard">
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">SOURCE</span>
+                                            <span class="rowValue">POKEMON API</span>
+                                        </div>
+                                        <div class="pokemonRow">
+                                            <span class="rowLabel">MODE</span>
+                                            <span class="rowValue">LIVE</span>
+                                        </div>
+                                    </div>
+                                    <div class="screenFooter">
+                                        <span class="screenHint">A/START: SELECT</span>
+                                        <span class="screenHint">B: BACK</span>
+                                    </div>
                                 </div>
                             </div>
 

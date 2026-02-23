@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.4] - 2026-02-23
+### Added
+- In-screen Pokedex menu UI with period-correct pixel font styling.
+- Live API fetch for random Pokemon with on-screen rendering of basic stats.
+- Meta-configurable API base URL for deployment flexibility.
+- D-pad, A/Start, and B button handling plus keyboard support.
+
+### Changed
+- Boot sequence now transitions into the menu after the Nintendo logo drop.
+
 ## [0.0.3] - 2026-02-22
 ### Added
 - Terms of Use and Privacy Policy pages.

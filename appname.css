@@ -30,6 +30,9 @@
     --speakerGrooveBorder: rgb(88, 88, 88);
     --displayOff: rgb(44, 88, 23);
     --displayOn: rgb(55, 110, 30);
+    --lcdText: rgb(20, 24, 16);
+    --lcdDim: rgba(20, 24, 16, 0.6);
+    --lcdBorder: rgba(20, 24, 16, 0.35);
 }
 
 body {
@@ -201,6 +204,8 @@ button {
     width: 240px;
     height: 200px;
     margin: auto;
+    position: relative;
+    overflow: hidden;
 }
 
 .displayOff {
@@ -239,6 +244,117 @@ button {
     width: 50%;
     height: 50%;
     
+}
+
+.screenContent {
+    position: absolute;
+    inset: 0;
+    padding: 12px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--lcdText);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.screenHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 8px;
+}
+
+.screenTitle {
+    display: inline-block;
+}
+
+.screenBadge {
+    display: inline-block;
+    padding: 2px 4px;
+    border: 1px solid var(--lcdBorder);
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menuItem {
+    background: transparent;
+    border: none;
+    color: inherit;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 8px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menuItem:focus-visible {
+    outline: 1px dashed var(--lcdText);
+    outline-offset: 2px;
+}
+
+.menuArrow {
+    width: 10px;
+    visibility: hidden;
+}
+
+.menuItem.is-selected .menuArrow {
+    visibility: visible;
+}
+
+.statusRow {
+    min-height: 10px;
+}
+
+.statusText {
+    color: var(--lcdDim);
+}
+
+.statusText.is-error {
+    color: var(--lcdText);
+}
+
+.pokemonCard,
+.aboutCard {
+    display: grid;
+    gap: 4px;
+    border-top: 1px solid var(--lcdBorder);
+    padding-top: 6px;
+}
+
+.pokemonRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.rowLabel {
+    color: var(--lcdDim);
+}
+
+.rowValue {
+    text-align: right;
+}
+
+.screenFooter {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 6px;
+    color: var(--lcdDim);
+}
+
+.screenHint {
+    display: inline-block;
 }
 
 .controlsContainer {
