@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.5] - 2026-02-23
+### Added
+- Boot-time navigation menu with a Pokedex entry point.
+- Clear option to reset Pokemon details.
+
+### Changed
+- Menu navigation is now driven by D-pad and A/Start (screen items are no longer clickable).
+
 ## [0.0.4] - 2026-02-23
 ### Added
 - In-screen Pokedex menu UI with period-correct pixel font styling.

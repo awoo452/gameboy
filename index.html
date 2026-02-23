@@ -58,10 +58,16 @@
                                 </div>
                                 <div class="screenContent hidden" id="screenContent" aria-live="polite">
                                     <div class="screenHeader">
-                                        <span class="screenTitle">POKEDEX</span>
-                                        <span class="screenBadge">DMG</span>
+                                        <span class="screenTitle" id="screenTitle">POKEDEX</span>
+                                        <span class="screenBadge" id="screenBadge">DMG</span>
                                     </div>
-                                    <div class="menu" id="menu">
+                                    <div class="navMenu hidden" id="navMenu">
+                                        <button class="navItem is-selected" data-action="pokedex" type="button">
+                                            <span class="menuArrow">></span>
+                                            <span class="menuLabel">POKEDEX</span>
+                                        </button>
+                                    </div>
+                                    <div class="menu hidden" id="menu">
                                         <button class="menuItem is-selected" data-action="random" type="button">
                                             <span class="menuArrow">></span>
                                             <span class="menuLabel">FETCH RANDOM</span>
@@ -69,6 +75,10 @@
                                         <button class="menuItem" data-action="about" type="button">
                                             <span class="menuArrow">></span>
                                             <span class="menuLabel">ABOUT</span>
+                                        </button>
+                                        <button class="menuItem" data-action="clear" type="button">
+                                            <span class="menuArrow">></span>
+                                            <span class="menuLabel">CLEAR</span>
                                         </button>
                                     </div>
                                     <div class="statusRow">

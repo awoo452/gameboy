@@ -237,7 +237,7 @@ button {
   }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .nintendoLogo {
@@ -277,13 +277,16 @@ button {
     border: 1px solid var(--lcdBorder);
 }
 
-.menu {
+.menu,
+.navMenu {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    pointer-events: none;
 }
 
-.menuItem {
+.menuItem,
+.navItem {
     background: transparent;
     border: none;
     color: inherit;
@@ -296,7 +299,8 @@ button {
     cursor: pointer;
 }
 
-.menuItem:focus-visible {
+.menuItem:focus-visible,
+.navItem:focus-visible {
     outline: 1px dashed var(--lcdText);
     outline-offset: 2px;
 }
@@ -306,7 +310,8 @@ button {
     visibility: hidden;
 }
 
-.menuItem.is-selected .menuArrow {
+.menuItem.is-selected .menuArrow,
+.navItem.is-selected .menuArrow {
     visibility: visible;
 }
 

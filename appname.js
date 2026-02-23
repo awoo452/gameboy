@@ -4,6 +4,10 @@ const display = document.querySelector('#display');
 const nintendoLogoContainer = document.querySelector('#nintendoLogoContainer');
 const nintendoLogo = document.querySelector('#nintendoLogo');
 const screenContent = document.querySelector('#screenContent');
+const screenTitle = document.querySelector('#screenTitle');
+const screenBadge = document.querySelector('#screenBadge');
+const navMenu = document.querySelector('#navMenu');
+const navItems = Array.from(document.querySelectorAll('.navItem'));
 const menu = document.querySelector('#menu');
 const menuItems = Array.from(document.querySelectorAll('.menuItem'));
 const statusText = document.querySelector('#statusText');
@@ -21,6 +25,11 @@ const bButton = document.querySelector('.bButton');
 
 const apiMeta = document.querySelector('meta[name="pokemon-api-base"]');
 const API_BASE_URL = (apiMeta && apiMeta.content ? apiMeta.content : 'http://localhost:3000').replace(/\/$/, '');
+
+const REQUEST_TIMEOUT_MS = 12000;
+const RETRY_LIMIT = 2;
+const RETRY_BASE_DELAY_MS = 900;
+const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 
 let bootTimeoutId = null;
 let screenTimeoutId = null;
@@ -61,6 +70,60 @@ function startGame() {
     bootTimeoutId = setTimeout(addDrop, 500);
 }
 
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchWithTimeout(url, options = {}) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+        return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
+
+async function fetchJsonWithRetry(url, options = {}) {
+    let attempt = 0;
+    let delayMs = RETRY_BASE_DELAY_MS;
+    while (true) {
+        try {
+            const response = await fetchWithTimeout(url, options);
+            if (!response.ok) {
+                if (attempt < RETRY_LIMIT && RETRYABLE_STATUS.has(response.status)) {
+                    attempt += 1;
+                    if (isOn()) {
+                        setStatus('RETRYING...');
+                    }
+                    await delay(delayMs);
+                    delayMs = Math.round(delayMs * 1.6);
+                    continue;
+                }
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            if (attempt < RETRY_LIMIT) {
+                attempt += 1;
+                if (isOn()) {
+                    setStatus('RETRYING...');
+                }
+                await delay(delayMs);
+                delayMs = Math.round(delayMs * 1.6);
+                continue;
+            }
+            throw error;
+        }
+    }
+}
+
+function warmUpApi() {
+    fetchWithTimeout(`${API_BASE_URL}/pokemon/random?persist=false`, {
+        headers: { 'Accept': 'application/json' }
+    }).catch(() => {});
+}
+
 function clearTimers() {
     if (bootTimeoutId !== null) {
         clearTimeout(bootTimeoutId);
@@ -98,25 +161,68 @@ function setStatus(text, isError = false) {
 }
 
 function setSelectedIndex(index) {
-    if (menuItems.length === 0) {
+    const items = getActiveMenuItems();
+    if (items.length === 0) {
         return;
     }
-    selectedIndex = (index + menuItems.length) % menuItems.length;
-    menuItems.forEach((item, itemIndex) => {
+    selectedIndex = (index + items.length) % items.length;
+    items.forEach((item, itemIndex) => {
         item.classList.toggle('is-selected', itemIndex === selectedIndex);
     });
 }
 
+function clearSelections() {
+    navItems.forEach((item) => item.classList.remove('is-selected'));
+    menuItems.forEach((item) => item.classList.remove('is-selected'));
+}
+
+function getActiveMenuItems() {
+    if (currentScreen === 'nav') {
+        return navItems;
+    }
+    if (currentScreen === 'menu') {
+        return menuItems;
+    }
+    return [];
+}
+
+function showNavMenu() {
+    currentScreen = 'nav';
+    if (screenTitle) {
+        screenTitle.textContent = 'MENU';
+    }
+    if (screenBadge) {
+        screenBadge.textContent = 'DMG';
+    }
+    navMenu.classList.remove('hidden');
+    menu.classList.add('hidden');
+    pokemonCard.classList.add('hidden');
+    aboutCard.classList.add('hidden');
+    setStatus('SELECT');
+    clearSelections();
+    setSelectedIndex(0);
+}
+
 function showMenu() {
     currentScreen = 'menu';
+    if (screenTitle) {
+        screenTitle.textContent = 'POKEDEX';
+    }
+    if (screenBadge) {
+        screenBadge.textContent = 'DMG';
+    }
+    navMenu.classList.add('hidden');
     menu.classList.remove('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.add('hidden');
     setStatus('READY');
+    clearSelections();
+    setSelectedIndex(0);
 }
 
 function showLoading() {
     currentScreen = 'loading';
+    navMenu.classList.add('hidden');
     menu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.add('hidden');
@@ -125,6 +231,7 @@ function showLoading() {
 
 function showPokemon() {
     currentScreen = 'details';
+    navMenu.classList.add('hidden');
     menu.classList.add('hidden');
     aboutCard.classList.add('hidden');
     pokemonCard.classList.remove('hidden');
@@ -133,6 +240,7 @@ function showPokemon() {
 
 function showAbout() {
     currentScreen = 'about';
+    navMenu.classList.add('hidden');
     menu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.remove('hidden');
@@ -140,8 +248,7 @@ function showAbout() {
 }
 
 function resetScreenState() {
-    setSelectedIndex(0);
-    showMenu();
+    showNavMenu();
 }
 
 function formatName(name) {
@@ -182,13 +289,9 @@ function renderPokemon(data) {
 async function fetchRandomPokemon() {
     showLoading();
     try {
-        const response = await fetch(`${API_BASE_URL}/pokemon/random?persist=false`, {
+        const data = await fetchJsonWithRetry(`${API_BASE_URL}/pokemon/random?persist=false`, {
             headers: { 'Accept': 'application/json' }
         });
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-        const data = await response.json();
         if (!isOn()) {
             return;
         }
@@ -198,13 +301,34 @@ async function fetchRandomPokemon() {
         if (!isOn()) {
             return;
         }
+        const message = error && error.message ? error.message.toUpperCase() : 'ERROR';
         showMenu();
-        setStatus('ERROR', true);
+        setStatus(message.slice(0, 12), true);
     }
 }
 
+function clearPokemon() {
+    pokemonId.textContent = '---';
+    pokemonName.textContent = '---------';
+    pokemonTypes.textContent = '------';
+    pokemonHW.textContent = '--.-- --.--';
+    pokemonCard.classList.add('hidden');
+    aboutCard.classList.add('hidden');
+    setStatus('CLEARED');
+}
+
 function handleMenuSelect() {
-    if (!isOn() || currentScreen !== 'menu') {
+    if (!isOn()) {
+        return;
+    }
+    if (currentScreen === 'nav') {
+        const action = navItems[selectedIndex] && navItems[selectedIndex].dataset.action;
+        if (action === 'pokedex') {
+            showMenu();
+        }
+        return;
+    }
+    if (currentScreen !== 'menu') {
         return;
     }
     const action = menuItems[selectedIndex] && menuItems[selectedIndex].dataset.action;
@@ -214,6 +338,10 @@ function handleMenuSelect() {
     }
     if (action === 'about') {
         showAbout();
+        return;
+    }
+    if (action === 'clear') {
+        clearPokemon();
     }
 }
 
@@ -221,20 +349,24 @@ function handleBack() {
     if (!isOn()) {
         return;
     }
-    if (currentScreen !== 'menu') {
+    if (currentScreen === 'menu') {
+        showNavMenu();
+        return;
+    }
+    if (currentScreen !== 'nav') {
         showMenu();
     }
 }
 
 function handleUp() {
-    if (!isOn() || currentScreen !== 'menu') {
+    if (!isOn() || (currentScreen !== 'menu' && currentScreen !== 'nav')) {
         return;
     }
     setSelectedIndex(selectedIndex - 1);
 }
 
 function handleDown() {
-    if (!isOn() || currentScreen !== 'menu') {
+    if (!isOn() || (currentScreen !== 'menu' && currentScreen !== 'nav')) {
         return;
     }
     setSelectedIndex(selectedIndex + 1);
@@ -246,6 +378,7 @@ function toggleOnOff() {
         turnOn();
         turnOnBatteryLight();
         turnOnDisplay();
+        warmUpApi();
         screenContent.classList.add('hidden');
         resetScreenState();
         bootTimeoutId = setTimeout(startGame, 500);
@@ -267,20 +400,10 @@ function nextScreen() {
     nintendoLogo.classList.add('hidden');
     nintendoLogoContainer.classList.remove('drop');
     screenContent.classList.remove('hidden');
-    showMenu();
+    showNavMenu();
 }
 
 onOffButton.addEventListener('click', toggleOnOff);
-
-menuItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
-        if (!isOn()) {
-            return;
-        }
-        setSelectedIndex(index);
-        handleMenuSelect();
-    });
-});
 
 dPadUp.addEventListener('click', handleUp);
 dPadDown.addEventListener('click', handleDown);
