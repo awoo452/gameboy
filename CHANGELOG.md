@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.8] - 2026-02-24
+### Changed
+- CORS can go fuck itself, respectfully
+
 ## [0.0.7] - 2026-02-24
 ### Changed
 - Removed the boot-time API warm-up call.
