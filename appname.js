@@ -347,10 +347,16 @@ function formatErrorMessage(error) {
     return 'Unexpected error. Try again.';
 }
 
-async function fetchRandomPokemon() {
+async function fetchRandomPokemon(options = {}) {
+    const range = options.range || 'all';
     showLoading();
     try {
-        const data = await fetchJsonWithRetry(`${API_BASE_URL}/pokemon/random?persist=false`, {
+        const url = new URL(`${API_BASE_URL}/pokemon/random`);
+        url.searchParams.set('persist', 'false');
+        if (range === 'original') {
+            url.searchParams.set('range', 'original');
+        }
+        const data = await fetchJsonWithRetry(url.toString(), {
             headers: { 'Accept': 'application/json' }
         });
         if (!isOn()) {
@@ -386,6 +392,10 @@ function handleMenuSelect() {
     const action = menuItems[selectedIndex] && menuItems[selectedIndex].dataset.action;
     if (action === 'random') {
         fetchRandomPokemon();
+        return;
+    }
+    if (action === 'random-original') {
+        fetchRandomPokemon({ range: 'original' });
         return;
     }
     if (action === 'about') {

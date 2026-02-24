@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.12] - 2026-02-24
+### Changed
+- Label the Error Codes link as "Docs" to match in-app messaging.
+- Document the API rate limit in the docs page.
+
+## [0.0.11] - 2026-02-24
+### Added
+- "Fetch Original" menu option to limit results to the original 151.
+
+### Changed
+- Random fetch now supports `range=original` against the Pokemon API.
+
 ## [0.0.10] - 2026-02-24
 ### Added
 - Error codes documentation page with troubleshooting steps.
