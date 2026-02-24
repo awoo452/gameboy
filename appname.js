@@ -31,6 +31,14 @@ const RETRY_LIMIT = 2;
 const RETRY_BASE_DELAY_MS = 900;
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 
+const ERROR_CODES = {
+    NETWORK: { code: 'GB-001', reason: 'Network error or CORS blocked.' },
+    TIMEOUT: { code: 'GB-002', reason: 'Request timed out.' },
+    NOT_FOUND: { code: 'GB-003', reason: 'API endpoint not found.' },
+    RATE_LIMITED: { code: 'GB-004', reason: 'Rate limited.' },
+    UNAVAILABLE: { code: 'GB-005', reason: 'Service unavailable.' }
+};
+
 let bootTimeoutId = null;
 let screenTimeoutId = null;
 let selectedIndex = 0;
@@ -283,28 +291,58 @@ function renderPokemon(data) {
     pokemonHW.textContent = formatHeightWeight(data && data.height, data && data.weight);
 }
 
-function formatErrorMessage(error) {
+function logError(details, error) {
+    const payload = {
+        code: details.code,
+        reason: details.reason
+    };
+    if (error instanceof ApiError) {
+        payload.status = error.status;
+        payload.statusText = error.statusText;
+    }
+    if (error && error.message) {
+        payload.message = error.message;
+    }
+    console.error(`[Gameboy] ${details.code}: ${details.reason}`, payload);
+}
+
+function getErrorDetails(error) {
     if (error && error.name === 'AbortError') {
-        return 'Request timed out. Try again.';
+        return ERROR_CODES.TIMEOUT;
     }
     if (error instanceof ApiError) {
+        if (error.status === 408) {
+            return ERROR_CODES.TIMEOUT;
+        }
         if (error.status === 404) {
-            return 'API endpoint not found.';
+            return ERROR_CODES.NOT_FOUND;
         }
         if (error.status === 429) {
-            return 'Rate limited. Try again.';
+            return ERROR_CODES.RATE_LIMITED;
         }
         if (error.status === 503) {
-            return 'API unavailable. Try again.';
+            return ERROR_CODES.UNAVAILABLE;
         }
         if (error.status >= 500) {
-            return 'API error. Try again.';
+            return ERROR_CODES.UNAVAILABLE;
         }
-        return `API error (HTTP ${error.status}).`;
+        return null;
     }
     const message = error && error.message ? String(error.message) : '';
     if (message.toLowerCase().includes('failed to fetch')) {
-        return 'Network error or CORS blocked.';
+        return ERROR_CODES.NETWORK;
+    }
+    return null;
+}
+
+function formatErrorMessage(error) {
+    const details = getErrorDetails(error);
+    if (details) {
+        logError(details, error);
+        return `Error ${details.code}. Visit docs to troubleshoot.`;
+    }
+    if (error instanceof ApiError) {
+        return `API error (HTTP ${error.status}).`;
     }
     return 'Unexpected error. Try again.';
 }

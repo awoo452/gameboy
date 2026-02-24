@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.10] - 2026-02-24
+### Added
+- Error codes documentation page with troubleshooting steps.
+- Footer link to Error Codes in the app and legal pages.
+
+### Changed
+- Display error codes with a “Visit docs to troubleshoot” prompt on failures.
+- Log error-code failures to the console with metadata.
+
 ## [0.0.9] - 2026-02-24
 ### Changed
 - Show clearer error messages when the API call fails.
