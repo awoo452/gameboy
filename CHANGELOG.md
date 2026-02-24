@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.7] - 2026-02-24
+### Changed
+- Removed the boot-time API warm-up call.
+- Kept status text at FETCHING during retries; no more RETRYING status.
+
 ## [0.0.6] - 2026-02-24
 ### Changed
 - Reduced noisy retry status by extending request timeout and silencing warm-up retries.

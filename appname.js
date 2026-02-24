@@ -84,8 +84,7 @@ async function fetchWithTimeout(url, options = {}) {
     }
 }
 
-async function fetchJsonWithRetry(url, options = {}, meta = {}) {
-    const { announceRetry = true } = meta;
+async function fetchJsonWithRetry(url, options = {}) {
     let attempt = 0;
     let delayMs = RETRY_BASE_DELAY_MS;
     while (true) {
@@ -94,9 +93,6 @@ async function fetchJsonWithRetry(url, options = {}, meta = {}) {
             if (!response.ok) {
                 if (attempt < RETRY_LIMIT && RETRYABLE_STATUS.has(response.status)) {
                     attempt += 1;
-                    if (announceRetry && isOn()) {
-                        setStatus('RETRYING...');
-                    }
                     await delay(delayMs);
                     delayMs = Math.round(delayMs * 1.6);
                     continue;
@@ -107,9 +103,6 @@ async function fetchJsonWithRetry(url, options = {}, meta = {}) {
         } catch (error) {
             if (attempt < RETRY_LIMIT) {
                 attempt += 1;
-                if (announceRetry && isOn()) {
-                    setStatus('RETRYING...');
-                }
                 await delay(delayMs);
                 delayMs = Math.round(delayMs * 1.6);
                 continue;
@@ -117,12 +110,6 @@ async function fetchJsonWithRetry(url, options = {}, meta = {}) {
             throw error;
         }
     }
-}
-
-function warmUpApi() {
-    fetchJsonWithRetry(`${API_BASE_URL}/pokemon/random?persist=false`, {
-        headers: { 'Accept': 'application/json' }
-    }, { announceRetry: false }).catch(() => {});
 }
 
 function clearTimers() {
@@ -367,7 +354,6 @@ function toggleOnOff() {
         turnOn();
         turnOnBatteryLight();
         turnOnDisplay();
-        warmUpApi();
         screenContent.classList.add('hidden');
         resetScreenState();
         bootTimeoutId = setTimeout(startGame, 500);
