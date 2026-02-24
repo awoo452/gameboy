@@ -316,11 +316,15 @@ button {
 }
 
 .statusRow {
-    min-height: 10px;
+    min-height: 20px;
 }
 
 .statusText {
     color: var(--lcdDim);
+    display: block;
+    line-height: 1.2;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .statusText.is-error {

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.9] - 2026-02-24
+### Changed
+- Show clearer error messages when the API call fails.
+
 ## [0.0.8] - 2026-02-24
 ### Changed
 - CORS can go fuck itself, respectfully

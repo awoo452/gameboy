@@ -36,6 +36,15 @@ let screenTimeoutId = null;
 let selectedIndex = 0;
 let currentScreen = 'boot';
 
+class ApiError extends Error {
+    constructor(status, statusText) {
+        super(`HTTP ${status}`);
+        this.name = 'ApiError';
+        this.status = status;
+        this.statusText = statusText;
+    }
+}
+
 function isOn() {
     return onOffButton.classList.contains('on');
 }
@@ -97,7 +106,7 @@ async function fetchJsonWithRetry(url, options = {}) {
                     delayMs = Math.round(delayMs * 1.6);
                     continue;
                 }
-                throw new Error(`HTTP ${response.status}`);
+                throw new ApiError(response.status, response.statusText);
             }
             return await response.json();
         } catch (error) {
@@ -274,6 +283,32 @@ function renderPokemon(data) {
     pokemonHW.textContent = formatHeightWeight(data && data.height, data && data.weight);
 }
 
+function formatErrorMessage(error) {
+    if (error && error.name === 'AbortError') {
+        return 'Request timed out. Try again.';
+    }
+    if (error instanceof ApiError) {
+        if (error.status === 404) {
+            return 'API endpoint not found.';
+        }
+        if (error.status === 429) {
+            return 'Rate limited. Try again.';
+        }
+        if (error.status === 503) {
+            return 'API unavailable. Try again.';
+        }
+        if (error.status >= 500) {
+            return 'API error. Try again.';
+        }
+        return `API error (HTTP ${error.status}).`;
+    }
+    const message = error && error.message ? String(error.message) : '';
+    if (message.toLowerCase().includes('failed to fetch')) {
+        return 'Network error or CORS blocked.';
+    }
+    return 'Unexpected error. Try again.';
+}
+
 async function fetchRandomPokemon() {
     showLoading();
     try {
@@ -289,9 +324,9 @@ async function fetchRandomPokemon() {
         if (!isOn()) {
             return;
         }
-        const message = error && error.message ? error.message.toUpperCase() : 'ERROR';
+        const message = formatErrorMessage(error);
         showMenu();
-        setStatus(message.slice(0, 12), true);
+        setStatus(message, true);
     }
 }
 
