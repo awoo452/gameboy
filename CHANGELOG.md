@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.6] - 2026-02-24
+### Changed
+- Reduced noisy retry status by extending request timeout and silencing warm-up retries.
+- Removed the Clear option from the Pokedex menu and its handler.
+
 ## [0.0.5] - 2026-02-23
 ### Added
 - Boot-time navigation menu with a Pokedex entry point.

@@ -26,7 +26,7 @@ const bButton = document.querySelector('.bButton');
 const apiMeta = document.querySelector('meta[name="pokemon-api-base"]');
 const API_BASE_URL = (apiMeta && apiMeta.content ? apiMeta.content : 'http://localhost:3000').replace(/\/$/, '');
 
-const REQUEST_TIMEOUT_MS = 12000;
+const REQUEST_TIMEOUT_MS = 20000;
 const RETRY_LIMIT = 2;
 const RETRY_BASE_DELAY_MS = 900;
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
@@ -84,7 +84,8 @@ async function fetchWithTimeout(url, options = {}) {
     }
 }
 
-async function fetchJsonWithRetry(url, options = {}) {
+async function fetchJsonWithRetry(url, options = {}, meta = {}) {
+    const { announceRetry = true } = meta;
     let attempt = 0;
     let delayMs = RETRY_BASE_DELAY_MS;
     while (true) {
@@ -93,7 +94,7 @@ async function fetchJsonWithRetry(url, options = {}) {
             if (!response.ok) {
                 if (attempt < RETRY_LIMIT && RETRYABLE_STATUS.has(response.status)) {
                     attempt += 1;
-                    if (isOn()) {
+                    if (announceRetry && isOn()) {
                         setStatus('RETRYING...');
                     }
                     await delay(delayMs);
@@ -106,7 +107,7 @@ async function fetchJsonWithRetry(url, options = {}) {
         } catch (error) {
             if (attempt < RETRY_LIMIT) {
                 attempt += 1;
-                if (isOn()) {
+                if (announceRetry && isOn()) {
                     setStatus('RETRYING...');
                 }
                 await delay(delayMs);
@@ -119,9 +120,9 @@ async function fetchJsonWithRetry(url, options = {}) {
 }
 
 function warmUpApi() {
-    fetchWithTimeout(`${API_BASE_URL}/pokemon/random?persist=false`, {
+    fetchJsonWithRetry(`${API_BASE_URL}/pokemon/random?persist=false`, {
         headers: { 'Accept': 'application/json' }
-    }).catch(() => {});
+    }, { announceRetry: false }).catch(() => {});
 }
 
 function clearTimers() {
@@ -307,15 +308,6 @@ async function fetchRandomPokemon() {
     }
 }
 
-function clearPokemon() {
-    pokemonId.textContent = '---';
-    pokemonName.textContent = '---------';
-    pokemonTypes.textContent = '------';
-    pokemonHW.textContent = '--.-- --.--';
-    pokemonCard.classList.add('hidden');
-    aboutCard.classList.add('hidden');
-    setStatus('CLEARED');
-}
 
 function handleMenuSelect() {
     if (!isOn()) {
@@ -339,9 +331,6 @@ function handleMenuSelect() {
     if (action === 'about') {
         showAbout();
         return;
-    }
-    if (action === 'clear') {
-        clearPokemon();
     }
 }
 
