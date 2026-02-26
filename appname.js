@@ -7,9 +7,12 @@ const screenContent = document.querySelector('#screenContent');
 const screenTitle = document.querySelector('#screenTitle');
 const screenBadge = document.querySelector('#screenBadge');
 const navMenu = document.querySelector('#navMenu');
-const navItems = Array.from(document.querySelectorAll('.navItem'));
+const navItems = Array.from(navMenu.querySelectorAll('.navItem'));
+const devNavItem = document.querySelector('#devNavItem');
 const menu = document.querySelector('#menu');
-const menuItems = Array.from(document.querySelectorAll('.menuItem'));
+const menuItems = Array.from(menu.querySelectorAll('.menuItem'));
+const devMenu = document.querySelector('#devMenu');
+const devMenuItems = Array.from(devMenu.querySelectorAll('.menuItem'));
 const statusText = document.querySelector('#statusText');
 const pokemonCard = document.querySelector('#pokemonCard');
 const aboutCard = document.querySelector('#aboutCard');
@@ -19,6 +22,8 @@ const pokemonTypes = document.querySelector('#pokemonTypes');
 const pokemonHW = document.querySelector('#pokemonHW');
 const dPadUp = document.querySelector('.dPadUp');
 const dPadDown = document.querySelector('.dPadDown');
+const dPadLeft = document.querySelector('.dPadLeft');
+const dPadRight = document.querySelector('.dPadRight');
 const startButton = document.querySelector('.startButton');
 const aButton = document.querySelector('.aButton');
 const bButton = document.querySelector('.bButton');
@@ -39,10 +44,19 @@ const ERROR_CODES = {
     UNAVAILABLE: { code: 'GB-005', reason: 'Service unavailable.' }
 };
 
+const DEV_SEQUENCE = [
+    { direction: 'left', count: 4 },
+    { direction: 'up', count: 2 },
+    { direction: 'down', count: 69 }
+];
+
 let bootTimeoutId = null;
 let screenTimeoutId = null;
 let selectedIndex = 0;
 let currentScreen = 'boot';
+let devSequenceStep = 0;
+let devSequenceCount = 0;
+let devUnlocked = false;
 
 class ApiError extends Error {
     constructor(status, statusText) {
@@ -165,6 +179,44 @@ function setStatus(text, isError = false) {
     statusText.classList.toggle('is-error', isError);
 }
 
+function unlockDevMenu() {
+    devUnlocked = true;
+    if (devNavItem) {
+        devNavItem.classList.remove('hidden');
+    }
+    if (currentScreen === 'nav') {
+        clearSelections();
+        setSelectedIndex(0);
+    }
+    setStatus('DEV MODE');
+}
+
+function registerDevInput(direction) {
+    if (devUnlocked || !direction) {
+        return;
+    }
+    const step = DEV_SEQUENCE[devSequenceStep];
+    if (!step) {
+        return;
+    }
+    if (direction === step.direction) {
+        devSequenceCount += 1;
+        if (devSequenceCount >= step.count) {
+            devSequenceStep += 1;
+            devSequenceCount = 0;
+            if (devSequenceStep >= DEV_SEQUENCE.length) {
+                unlockDevMenu();
+            }
+        }
+        return;
+    }
+    devSequenceStep = 0;
+    devSequenceCount = 0;
+    if (direction === DEV_SEQUENCE[0].direction) {
+        devSequenceCount = 1;
+    }
+}
+
 function setSelectedIndex(index) {
     const items = getActiveMenuItems();
     if (items.length === 0) {
@@ -179,14 +231,18 @@ function setSelectedIndex(index) {
 function clearSelections() {
     navItems.forEach((item) => item.classList.remove('is-selected'));
     menuItems.forEach((item) => item.classList.remove('is-selected'));
+    devMenuItems.forEach((item) => item.classList.remove('is-selected'));
 }
 
 function getActiveMenuItems() {
     if (currentScreen === 'nav') {
-        return navItems;
+        return navItems.filter((item) => !item.classList.contains('hidden'));
     }
     if (currentScreen === 'menu') {
         return menuItems;
+    }
+    if (currentScreen === 'dev') {
+        return devMenuItems;
     }
     return [];
 }
@@ -201,6 +257,7 @@ function showNavMenu() {
     }
     navMenu.classList.remove('hidden');
     menu.classList.add('hidden');
+    devMenu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.add('hidden');
     setStatus('SELECT');
@@ -218,6 +275,7 @@ function showMenu() {
     }
     navMenu.classList.add('hidden');
     menu.classList.remove('hidden');
+    devMenu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.add('hidden');
     setStatus('READY');
@@ -229,6 +287,7 @@ function showLoading() {
     currentScreen = 'loading';
     navMenu.classList.add('hidden');
     menu.classList.add('hidden');
+    devMenu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.add('hidden');
     setStatus('FETCHING...');
@@ -238,6 +297,7 @@ function showPokemon() {
     currentScreen = 'details';
     navMenu.classList.add('hidden');
     menu.classList.add('hidden');
+    devMenu.classList.add('hidden');
     aboutCard.classList.add('hidden');
     pokemonCard.classList.remove('hidden');
     setStatus('FOUND');
@@ -247,9 +307,28 @@ function showAbout() {
     currentScreen = 'about';
     navMenu.classList.add('hidden');
     menu.classList.add('hidden');
+    devMenu.classList.add('hidden');
     pokemonCard.classList.add('hidden');
     aboutCard.classList.remove('hidden');
     setStatus('INFO');
+}
+
+function showDevMenu() {
+    currentScreen = 'dev';
+    if (screenTitle) {
+        screenTitle.textContent = 'DEV MENU';
+    }
+    if (screenBadge) {
+        screenBadge.textContent = 'DEV';
+    }
+    navMenu.classList.add('hidden');
+    menu.classList.add('hidden');
+    devMenu.classList.remove('hidden');
+    pokemonCard.classList.add('hidden');
+    aboutCard.classList.add('hidden');
+    setStatus('READY');
+    clearSelections();
+    setSelectedIndex(0);
 }
 
 function resetScreenState() {
@@ -376,6 +455,42 @@ async function fetchRandomPokemon(options = {}) {
     }
 }
 
+async function triggerRateLimit() {
+    if (!isOn()) {
+        return;
+    }
+    showLoading();
+    const url = new URL(`${API_BASE_URL}/pokemon/random`);
+    url.searchParams.set('persist', 'false');
+    try {
+        for (let i = 0; i < 4; i += 1) {
+            const response = await fetchWithTimeout(url.toString(), {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!response.ok) {
+                throw new ApiError(response.status, response.statusText);
+            }
+            try {
+                await response.json();
+            } catch (_) {
+                // Ignore parsing issues; we only care about status codes here.
+            }
+        }
+        if (!isOn()) {
+            return;
+        }
+        showDevMenu();
+        setStatus('NO LIMIT HIT');
+    } catch (error) {
+        if (!isOn()) {
+            return;
+        }
+        const message = formatErrorMessage(error);
+        showDevMenu();
+        setStatus(message, true);
+    }
+}
+
 
 function handleMenuSelect() {
     if (!isOn()) {
@@ -386,23 +501,36 @@ function handleMenuSelect() {
         if (action === 'pokedex') {
             showMenu();
         }
+        if (action === 'dev') {
+            showDevMenu();
+        }
         return;
     }
     if (currentScreen !== 'menu') {
-        return;
+        if (currentScreen !== 'dev') {
+            return;
+        }
     }
-    const action = menuItems[selectedIndex] && menuItems[selectedIndex].dataset.action;
-    if (action === 'random') {
-        fetchRandomPokemon();
-        return;
+    const activeItems = getActiveMenuItems();
+    const action = activeItems[selectedIndex] && activeItems[selectedIndex].dataset.action;
+    if (currentScreen === 'menu') {
+        if (action === 'random') {
+            fetchRandomPokemon();
+            return;
+        }
+        if (action === 'random-original') {
+            fetchRandomPokemon({ range: 'original' });
+            return;
+        }
+        if (action === 'about') {
+            showAbout();
+            return;
+        }
     }
-    if (action === 'random-original') {
-        fetchRandomPokemon({ range: 'original' });
-        return;
-    }
-    if (action === 'about') {
-        showAbout();
-        return;
+    if (currentScreen === 'dev') {
+        if (action === 'rate-limit') {
+            triggerRateLimit();
+        }
     }
 }
 
@@ -414,23 +542,49 @@ function handleBack() {
         showNavMenu();
         return;
     }
+    if (currentScreen === 'dev') {
+        showNavMenu();
+        return;
+    }
     if (currentScreen !== 'nav') {
         showMenu();
     }
 }
 
 function handleUp() {
-    if (!isOn() || (currentScreen !== 'menu' && currentScreen !== 'nav')) {
+    if (!isOn()) {
+        return;
+    }
+    registerDevInput('up');
+    if (currentScreen !== 'menu' && currentScreen !== 'nav' && currentScreen !== 'dev') {
         return;
     }
     setSelectedIndex(selectedIndex - 1);
 }
 
 function handleDown() {
-    if (!isOn() || (currentScreen !== 'menu' && currentScreen !== 'nav')) {
+    if (!isOn()) {
+        return;
+    }
+    registerDevInput('down');
+    if (currentScreen !== 'menu' && currentScreen !== 'nav' && currentScreen !== 'dev') {
         return;
     }
     setSelectedIndex(selectedIndex + 1);
+}
+
+function handleLeft() {
+    if (!isOn()) {
+        return;
+    }
+    registerDevInput('left');
+}
+
+function handleRight() {
+    if (!isOn()) {
+        return;
+    }
+    registerDevInput('right');
 }
 
 function toggleOnOff() {
@@ -467,6 +621,8 @@ onOffButton.addEventListener('click', toggleOnOff);
 
 dPadUp.addEventListener('click', handleUp);
 dPadDown.addEventListener('click', handleDown);
+dPadLeft.addEventListener('click', handleLeft);
+dPadRight.addEventListener('click', handleRight);
 aButton.addEventListener('click', handleMenuSelect);
 startButton.addEventListener('click', handleMenuSelect);
 bButton.addEventListener('click', handleBack);
@@ -481,6 +637,14 @@ document.addEventListener('keydown', (event) => {
     }
     if (event.key === 'ArrowDown') {
         handleDown();
+        return;
+    }
+    if (event.key === 'ArrowLeft') {
+        handleLeft();
+        return;
+    }
+    if (event.key === 'ArrowRight') {
+        handleRight();
         return;
     }
     if (event.key === 'Enter' || event.key.toLowerCase() === 'a') {

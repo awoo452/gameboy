@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.16] - 2026-02-26
+### Added
+- Hidden Dev menu unlocked via 42069 D-pad sequence
+- Dev menu action to trigger API rate limiting for testing error handling.
+
 ## [0.0.15] - 2026-02-26
 ### Changed
 - Documented that API calls persist by default and how to opt out with `persist=false`.
