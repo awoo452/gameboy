@@ -352,7 +352,9 @@ async function fetchRandomPokemon(options = {}) {
     showLoading();
     try {
         const url = new URL(`${API_BASE_URL}/pokemon/random`);
-        url.searchParams.set('persist', 'false');
+        if (options.persist === false) {
+            url.searchParams.set('persist', 'false');
+        }
         if (range === 'original') {
             url.searchParams.set('range', 'original');
         }
