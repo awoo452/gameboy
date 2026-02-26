@@ -68,13 +68,13 @@
       <h2><span class="code">GB-004</span> — Rate limited</h2>
       <p>The API is receiving too many requests.</p>
       <ul>
-        <li>Current limit is 3 requests per minute per IP.</li>
+        <li>Default limit is 3 requests per minute per IP (API configurable).</li>
         <li>Wait a minute and try again.</li>
         <li>Avoid rapid repeated requests.</li>
       </ul>
 
       <h2><span class="code">GB-005</span> — Service unavailable</h2>
-      <p>The API is down or returning server errors.</p>
+      <p>The API is down or returning server errors (5xx).</p>
       <ul>
         <li>Wait and retry later.</li>
         <li>Check the Pokemon API deployment logs for errors.</li>
