@@ -28,6 +28,7 @@ Then visit `http://localhost:8000`.
 
 ## Notes
 - Fonts and icons are loaded from CDNs; you will need a network connection for those resources.
+- API calls to `/pokemon/random` persist by default. To make stateless calls, pass `persist: false` in `fetchRandomPokemon` or append `persist=false` to the request.
 
 ## License
 No license specified. If you want this to be open-source, add a license file (MIT/Apache-2.0 are common choices).

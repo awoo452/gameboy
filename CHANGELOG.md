@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.14] - 2026-02-26
+### Changed
+- README.md is differenter than it used to be.0
+
 ## [0.0.13] - 2026-02-26
 ### Changed
 - Only send `persist=false` when explicitly requested; default API calls now allow persistence.
