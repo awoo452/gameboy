@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.17] - 2026-02-26
+### Changed
+Gameboy now always sends persist=true for normal fetches. The only path that sends persist=false is the dev rate‑limit action.
+
 ## [0.0.16] - 2026-02-26
 ### Added
 - Hidden Dev menu unlocked via 42069 D-pad sequence
