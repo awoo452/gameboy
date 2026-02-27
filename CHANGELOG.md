@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.18] - 2026-02-26
+### Added
+- Dev menu actions to trigger GB-002 (timeout) and GB-003 (not found).
+
+### Changed
+- Documented the dev menu and its actions in the README and error-code docs.
+
 ## [0.0.17] - 2026-02-26
 ### Changed
 Gameboy now always sends persist=true for normal fetches. The only path that sends persist=false is the dev rate‑limit action.

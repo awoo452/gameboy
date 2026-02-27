@@ -80,6 +80,16 @@
         <li>Check the Pokemon API deployment logs for errors.</li>
       </ul>
 
+      <h2>Dev Menu (Hidden)</h2>
+      <p>There is a hidden dev menu that can be used to intentionally trigger error states for testing.</p>
+      <ul>
+        <li>Unlock sequence (D-pad): left x4, up x2, down x69 (42069 total).</li>
+        <li>Once unlocked, a DEV item appears in the main menu. Use A/Start to open it.</li>
+        <li>RATE LIMIT fires rapid requests with <span class="code">persist=false</span> to surface 429 errors.</li>
+        <li>TIMEOUT forces a rapid request timeout to surface GB-002.</li>
+        <li>NOT FOUND hits a missing endpoint to surface GB-003.</li>
+      </ul>
+
       <p class="legal-footer">
         <a href="index.html">Back to the app</a>
         <span> | </span>

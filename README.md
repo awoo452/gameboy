@@ -6,6 +6,7 @@ A static, pixel-accurate-ish recreation of the original Nintendo Game Boy (DMG-0
 - Power toggle with battery light + display on/off state
 - Nintendo logo boot animation
 - Fully static layout (no build step)
+- Hidden dev menu for testing API error states
 
 ## Tech Stack
 - HTML + CSS + vanilla JavaScript
@@ -30,5 +31,15 @@ Then visit `http://localhost:8000`.
 - Fonts and icons are loaded from CDNs; you will need a network connection for those resources.
 - API calls to `/pokemon/random` persist by default. To make stateless calls, pass `persist: false` in `fetchRandomPokemon` or append `persist=false` to the request.
 
+## Dev Menu
+The dev menu is hidden by default.
+- Unlock sequence (D-pad): 42069 (figure it out)
+- Once unlocked, a DEV item appears in the main menu. Use A/Start to open it.
+- Requests made under this menu are sent with `persist=false` to avoid db clutter in the Pokemon API
+Actions:
+- RATE LIMIT fires rapid requests to surface 429 errors.
+- TIMEOUT forces a rapid request timeout to surface GB-002.
+- NOT FOUND hits a missing endpoint to surface GB-003.
+
 ## License
-No license specified. If you want this to be open-source, add a license file (MIT/Apache-2.0 are common choices).
+All rights reserved. See `LICENSE`.

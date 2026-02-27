@@ -105,9 +105,9 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function fetchWithTimeout(url, options = {}) {
+async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
     try {
         return await fetch(url, { ...options, signal: controller.signal });
     } finally {
@@ -490,6 +490,74 @@ async function triggerRateLimit() {
     }
 }
 
+async function triggerTimeout() {
+    if (!isOn()) {
+        return;
+    }
+    showLoading();
+    const url = new URL(`${API_BASE_URL}/pokemon/random`);
+    url.searchParams.set('persist', 'false');
+    try {
+        const response = await fetchWithTimeout(url.toString(), {
+            headers: { 'Accept': 'application/json' }
+        }, 1);
+        if (!response.ok) {
+            throw new ApiError(response.status, response.statusText);
+        }
+        try {
+            await response.json();
+        } catch (_) {
+            // Ignore parsing issues; we only care about status codes here.
+        }
+        if (!isOn()) {
+            return;
+        }
+        showDevMenu();
+        setStatus('NO TIMEOUT HIT');
+    } catch (error) {
+        if (!isOn()) {
+            return;
+        }
+        const message = formatErrorMessage(error);
+        showDevMenu();
+        setStatus(message, true);
+    }
+}
+
+async function triggerNotFound() {
+    if (!isOn()) {
+        return;
+    }
+    showLoading();
+    const url = new URL(`${API_BASE_URL}/pokemon/does-not-exist`);
+    url.searchParams.set('persist', 'false');
+    try {
+        const response = await fetchWithTimeout(url.toString(), {
+            headers: { 'Accept': 'application/json' }
+        });
+        if (!response.ok) {
+            throw new ApiError(response.status, response.statusText);
+        }
+        try {
+            await response.json();
+        } catch (_) {
+            // Ignore parsing issues; we only care about status codes here.
+        }
+        if (!isOn()) {
+            return;
+        }
+        showDevMenu();
+        setStatus('NO 404 HIT');
+    } catch (error) {
+        if (!isOn()) {
+            return;
+        }
+        const message = formatErrorMessage(error);
+        showDevMenu();
+        setStatus(message, true);
+    }
+}
+
 
 function handleMenuSelect() {
     if (!isOn()) {
@@ -529,6 +597,10 @@ function handleMenuSelect() {
     if (currentScreen === 'dev') {
         if (action === 'rate-limit') {
             triggerRateLimit();
+        } else if (action === 'timeout') {
+            triggerTimeout();
+        } else if (action === 'not-found') {
+            triggerNotFound();
         }
     }
 }
