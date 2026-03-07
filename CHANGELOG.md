@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.19] - 2026-03-07
+### Changed
+- Added a responsive viewport meta tag.
+- Removed Bootstrap and Font Awesome CDNs in favor of local utility/caret styles.
+- Moved footer styling out of inline HTML and into CSS.
+- Fixed the power switch positioning after removing Bootstrap defaults.
+- Adjusted the power switch label size and caret scale to match the original layout.
+
 ## [0.0.18] - 2026-02-26
 ### Added
 - Dev menu actions to trigger GB-002 (timeout) and GB-003 (not found).

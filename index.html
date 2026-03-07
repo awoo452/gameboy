@@ -4,15 +4,13 @@
     <head>
 
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <title>Gameboy DMG-001</title>
         
         <link rel="stylesheet" href="appname.css">
         <meta name="pokemon-api-base" content="https://pokemon-api-03a0e8d55140.herokuapp.com">
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!--FontAwesome CSS file-->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -32,7 +30,7 @@
                         
                         <div class="col-10 topLines mx-auto pl-1">
                             <div class="offOn">
-                                <span class="offOnLetters"><i class="fas fa-caret-left" aria-hidden="true"></i> OFF • ON <i class="fas fa-caret-right" aria-hidden="true"></i></span>
+                                <span class="offOnLetters"><span class="caret caret-left" aria-hidden="true"></span> OFF • ON <span class="caret caret-right" aria-hidden="true"></span></span>
                             </div>
                         </div>
                         <hr class='topLine mt-0'>
@@ -144,19 +142,19 @@
                         <div class="controlsContainer">
                             <div class="dPad">
                                 <div class="caretUpContainer">
-                                    <div class="fa fa-caret-up" aria-hidden="true"></div>
+                                    <span class="caret caret-up" aria-hidden="true"></span>
                                 </div>
                                 <button class="dPadUp" aria-label="D-pad up"></button>
                                 <div class="caretDownContainer">
-                                    <div class="fa fa-caret-down" aria-hidden="true"></div>
+                                    <span class="caret caret-down" aria-hidden="true"></span>
                                 </div>
                                 <button class="dPadDown" aria-label="D-pad down"></button>
                                 <div class="caretLeftContainer">
-                                    <div class="fa fa-caret-left" aria-hidden="true"></div>
+                                    <span class="caret caret-left" aria-hidden="true"></span>
                                 </div>
                                 <button class="dPadLeft" aria-label="D-pad left"></button>
                                 <div class="caretRightContainer">
-                                    <div class="fa fa-caret-right" aria-hidden="true"></div>
+                                    <span class="caret caret-right" aria-hidden="true"></span>
                                 </div>
                                 <button class="dPadRight" aria-label="D-pad right"></button>
                                 <div class="dPadCenter"></div>
@@ -216,12 +214,12 @@
             </div>
         </div>
 
-        <footer id="legal-footer" style="text-align: center; color: #fff; font-family: 'Oswald', sans-serif; padding: 16px 8px;">
-            <a href="terms.html" style="color: #fff; text-decoration: none;">Terms</a>
+        <footer id="legal-footer">
+            <a href="terms.html">Terms</a>
             <span> | </span>
-            <a href="privacy.html" style="color: #fff; text-decoration: none;">Privacy</a>
+            <a href="privacy.html">Privacy</a>
             <span> | </span>
-            <a href="error-codes.html" style="color: #fff; text-decoration: none;">Docs</a>
+            <a href="error-codes.html">Docs</a>
         </footer>
 
         <!--app.js-->
