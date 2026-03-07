@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.22] - 2026-03-07
+
+### Changed
+- Added responsive shell scaling to fit the viewport while keeping the LCD at 1:1.
+- Documented the pixel-accurate LCD and non-touch controls.
+- Renamed the docs page to `documents.html`.
+
 ## [0.0.21] - 2026-03-07
 ### Changed
 - Set the LCD display to the original Game Boy resolution (160x144).

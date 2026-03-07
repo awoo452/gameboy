@@ -23,192 +23,196 @@
             
             <div class="row">
                 <div class="col mt-4">
-                    <div class="offOnContainer mx-auto">
-                        <button class="offOnButton off" id="onOffButton" aria-label="Power switch"></button>
-                    </div>
-                    <div class="frame mx-auto">
+                    <div class="gameboy-wrap">
+                        <div class="gameboy-scale">
+                            <div class="offOnContainer mx-auto">
+                                <button class="offOnButton off" id="onOffButton" aria-label="Power switch"></button>
+                            </div>
+                            <div class="frame mx-auto">
                         
-                        <div class="col-10 topLines mx-auto pl-1">
-                            <div class="offOn">
-                                <span class="offOnLetters"><span class="caret caret-left" aria-hidden="true"></span> OFF • ON <span class="caret caret-right" aria-hidden="true"></span></span>
+                                <div class="col-10 topLines mx-auto pl-1">
+                                    <div class="offOn">
+                                        <span class="offOnLetters"><span class="caret caret-left" aria-hidden="true"></span> OFF • ON <span class="caret caret-right" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+                                <hr class='topLine mt-0'>
+                                <div class="screen mx-auto">
+                                    <div class="dotMatrix pl-1 pr-1">
+                                        <span class="dotMatrixText mb-0">DOT MATRIX WITH STEREO SOUND</span>
+                                    </div>
+                                    <div class="matrixLineTop mt-3 mb-1 mx-auto"></div>
+                                    <div class="matrixLineBottom mb-3 mx-auto"></div>
+                                    
+                                    <div class="batteryContainer">
+                                        <div class="batteryLightContainer">
+                                            <div class="batteryLight batteryLightOff" id="batteryLight"></div>
+                                        </div>
+                                        <div class="batteryTextContainer">
+                                            <span class="batteryText">BATTERY</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="display displayOff" id="display">
+                                        <div class="nintendoLogoContainer" id="nintendoLogoContainer">
+                                            <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png" alt="Nintendo logo">
+                                        </div>
+                                        <div class="screenContent hidden" id="screenContent" aria-live="polite">
+                                            <div class="screenHeader">
+                                                <span class="screenTitle" id="screenTitle">POKEDEX</span>
+                                                <span class="screenBadge" id="screenBadge">DMG</span>
+                                            </div>
+                                            <div class="navMenu hidden" id="navMenu">
+                                                <button class="navItem is-selected" data-action="pokedex" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">POKEDEX</span>
+                                                </button>
+                                                <button class="navItem hidden" id="devNavItem" data-action="dev" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">DEV</span>
+                                                </button>
+                                            </div>
+                                            <div class="menu hidden" id="menu">
+                                                <button class="menuItem is-selected" data-action="random" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">FETCH RANDOM</span>
+                                                </button>
+                                                <button class="menuItem" data-action="random-original" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">FETCH ORIGINAL</span>
+                                                </button>
+                                                <button class="menuItem" data-action="about" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">ABOUT</span>
+                                                </button>
+                                            </div>
+                                            <div class="menu hidden" id="devMenu">
+                                                <button class="menuItem is-selected" data-action="rate-limit" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">RATE LIMIT</span>
+                                                </button>
+                                                <button class="menuItem" data-action="timeout" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">TIMEOUT</span>
+                                                </button>
+                                                <button class="menuItem" data-action="not-found" type="button">
+                                                    <span class="menuArrow">></span>
+                                                    <span class="menuLabel">NOT FOUND</span>
+                                                </button>
+                                            </div>
+                                            <div class="statusRow">
+                                                <span class="statusText" id="statusText"></span>
+                                            </div>
+                                            <div class="pokemonCard hidden" id="pokemonCard">
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">NO.</span>
+                                                    <span class="rowValue" id="pokemonId"></span>
+                                                </div>
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">NAME</span>
+                                                    <span class="rowValue" id="pokemonName"></span>
+                                                </div>
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">TYPE</span>
+                                                    <span class="rowValue" id="pokemonTypes"></span>
+                                                </div>
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">HT/WT</span>
+                                                    <span class="rowValue" id="pokemonHW"></span>
+                                                </div>
+                                            </div>
+                                            <div class="aboutCard hidden" id="aboutCard">
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">SOURCE</span>
+                                                    <span class="rowValue">POKEMON API</span>
+                                                </div>
+                                                <div class="pokemonRow">
+                                                    <span class="rowLabel">MODE</span>
+                                                    <span class="rowValue">LIVE</span>
+                                                </div>
+                                            </div>
+                                            <div class="screenFooter">
+                                                <span class="screenHint">A/START: SELECT</span>
+                                                <span class="screenHint">B: BACK</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <img class="nintendoGameBoy" src="img/nintendogameboy.png" alt="Nintendo Game Boy logo">
+
+                                <div class="controlsContainer">
+                                    <div class="dPad">
+                                        <div class="caretUpContainer">
+                                            <span class="caret caret-up" aria-hidden="true"></span>
+                                        </div>
+                                        <button class="dPadUp" aria-label="D-pad up"></button>
+                                        <div class="caretDownContainer">
+                                            <span class="caret caret-down" aria-hidden="true"></span>
+                                        </div>
+                                        <button class="dPadDown" aria-label="D-pad down"></button>
+                                        <div class="caretLeftContainer">
+                                            <span class="caret caret-left" aria-hidden="true"></span>
+                                        </div>
+                                        <button class="dPadLeft" aria-label="D-pad left"></button>
+                                        <div class="caretRightContainer">
+                                            <span class="caret caret-right" aria-hidden="true"></span>
+                                        </div>
+                                        <button class="dPadRight" aria-label="D-pad right"></button>
+                                        <div class="dPadCenter"></div>
+                                    </div>
+
+                                    
+
+                                    <div class="selectStart">
+                                        <div class="select">
+                                            <button class="selectButton" aria-label="Select button"></button>
+                                            <span class="selectText">SELECT</span>
+                                        </div>
+                                        <div class="start">
+                                            <button class="startButton" aria-label="Start button"></button>
+                                            <span class="startText">START</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="bAContainer">
+                                        <div class="bAButtonContainer">
+                                            <button class='bButton' aria-label="B button"></button>
+                                            <button class="aButton" aria-label="A button"></button>
+                                        </div>
+                                        <div class="bContainer">
+                                            <span class="b">B</span>
+                                        </div>
+                                        <div class="aContainer">
+                                            <span class="a">A</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="speakerContainer">
+                                        <div class="line"></div>
+                                        <div class="line">
+                                            <div class="hole"></div>
+                                        </div>
+                                        <div class="line">
+                                            <div class="hole"></div>
+                                        </div>
+                                        <div class="line">
+                                            <div class="hole"></div>
+                                        </div>
+                                        <div class="line">
+                                            <div class="hole"></div>
+                                        </div>
+                                        <div class="line">
+                                            <div class="hole"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                
+
                             </div>
                         </div>
-                        <hr class='topLine mt-0'>
-                        <div class="screen mx-auto">
-                            <div class="dotMatrix pl-1 pr-1">
-                                <span class="dotMatrixText mb-0">DOT MATRIX WITH STEREO SOUND</span>
-                            </div>
-                            <div class="matrixLineTop mt-3 mb-1 mx-auto"></div>
-                            <div class="matrixLineBottom mb-3 mx-auto"></div>
-                            
-                            <div class="batteryContainer">
-                                <div class="batteryLightContainer">
-                                    <div class="batteryLight batteryLightOff" id="batteryLight"></div>
-                                </div>
-                                <div class="batteryTextContainer">
-                                    <span class="batteryText">BATTERY</span>
-                                </div>
-                            </div>
-
-                            <div class="display displayOff" id="display">
-                                <div class="nintendoLogoContainer" id="nintendoLogoContainer">
-                                    <img class="nintendoLogo hidden" id="nintendoLogo" src="img/nintendologo.png" alt="Nintendo logo">
-                                </div>
-                                <div class="screenContent hidden" id="screenContent" aria-live="polite">
-                                    <div class="screenHeader">
-                                        <span class="screenTitle" id="screenTitle">POKEDEX</span>
-                                        <span class="screenBadge" id="screenBadge">DMG</span>
-                                    </div>
-                                    <div class="navMenu hidden" id="navMenu">
-                                        <button class="navItem is-selected" data-action="pokedex" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">POKEDEX</span>
-                                        </button>
-                                        <button class="navItem hidden" id="devNavItem" data-action="dev" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">DEV</span>
-                                        </button>
-                                    </div>
-                                    <div class="menu hidden" id="menu">
-                                        <button class="menuItem is-selected" data-action="random" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">FETCH RANDOM</span>
-                                        </button>
-                                        <button class="menuItem" data-action="random-original" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">FETCH ORIGINAL</span>
-                                        </button>
-                                        <button class="menuItem" data-action="about" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">ABOUT</span>
-                                        </button>
-                                    </div>
-                                    <div class="menu hidden" id="devMenu">
-                                        <button class="menuItem is-selected" data-action="rate-limit" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">RATE LIMIT</span>
-                                        </button>
-                                        <button class="menuItem" data-action="timeout" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">TIMEOUT</span>
-                                        </button>
-                                        <button class="menuItem" data-action="not-found" type="button">
-                                            <span class="menuArrow">></span>
-                                            <span class="menuLabel">NOT FOUND</span>
-                                        </button>
-                                    </div>
-                                    <div class="statusRow">
-                                        <span class="statusText" id="statusText"></span>
-                                    </div>
-                                    <div class="pokemonCard hidden" id="pokemonCard">
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">NO.</span>
-                                            <span class="rowValue" id="pokemonId"></span>
-                                        </div>
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">NAME</span>
-                                            <span class="rowValue" id="pokemonName"></span>
-                                        </div>
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">TYPE</span>
-                                            <span class="rowValue" id="pokemonTypes"></span>
-                                        </div>
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">HT/WT</span>
-                                            <span class="rowValue" id="pokemonHW"></span>
-                                        </div>
-                                    </div>
-                                    <div class="aboutCard hidden" id="aboutCard">
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">SOURCE</span>
-                                            <span class="rowValue">POKEMON API</span>
-                                        </div>
-                                        <div class="pokemonRow">
-                                            <span class="rowLabel">MODE</span>
-                                            <span class="rowValue">LIVE</span>
-                                        </div>
-                                    </div>
-                                    <div class="screenFooter">
-                                        <span class="screenHint">A/START: SELECT</span>
-                                        <span class="screenHint">B: BACK</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <img class="nintendoGameBoy" src="img/nintendogameboy.png" alt="Nintendo Game Boy logo">
-
-                        <div class="controlsContainer">
-                            <div class="dPad">
-                                <div class="caretUpContainer">
-                                    <span class="caret caret-up" aria-hidden="true"></span>
-                                </div>
-                                <button class="dPadUp" aria-label="D-pad up"></button>
-                                <div class="caretDownContainer">
-                                    <span class="caret caret-down" aria-hidden="true"></span>
-                                </div>
-                                <button class="dPadDown" aria-label="D-pad down"></button>
-                                <div class="caretLeftContainer">
-                                    <span class="caret caret-left" aria-hidden="true"></span>
-                                </div>
-                                <button class="dPadLeft" aria-label="D-pad left"></button>
-                                <div class="caretRightContainer">
-                                    <span class="caret caret-right" aria-hidden="true"></span>
-                                </div>
-                                <button class="dPadRight" aria-label="D-pad right"></button>
-                                <div class="dPadCenter"></div>
-                            </div>
-
-                            
-
-                            <div class="selectStart">
-                                <div class="select">
-                                    <button class="selectButton" aria-label="Select button"></button>
-                                    <span class="selectText">SELECT</span>
-                                </div>
-                                <div class="start">
-                                    <button class="startButton" aria-label="Start button"></button>
-                                    <span class="startText">START</span>
-                                </div>
-                            </div>
-
-                            <div class="bAContainer">
-                                <div class="bAButtonContainer">
-                                    <button class='bButton' aria-label="B button"></button>
-                                    <button class="aButton" aria-label="A button"></button>
-                                </div>
-                                <div class="bContainer">
-                                    <span class="b">B</span>
-                                </div>
-                                <div class="aContainer">
-                                    <span class="a">A</span>
-                                </div>
-                            </div>
-
-                            <div class="speakerContainer">
-                                <div class="line"></div>
-                                <div class="line">
-                                    <div class="hole"></div>
-                                </div>
-                                <div class="line">
-                                    <div class="hole"></div>
-                                </div>
-                                <div class="line">
-                                    <div class="hole"></div>
-                                </div>
-                                <div class="line">
-                                    <div class="hole"></div>
-                                </div>
-                                <div class="line">
-                                    <div class="hole"></div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        
-
                     </div>
                 </div>
             </div>
@@ -219,7 +223,7 @@
             <span> | </span>
             <a href="privacy.html">Privacy</a>
             <span> | </span>
-            <a href="error-codes.html">Docs</a>
+            <a href="documents.html">Docs</a>
         </footer>
 
         <!--app.js-->

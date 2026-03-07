@@ -36,6 +36,8 @@
     --lcdBorder: rgba(20, 24, 16, 0.35);
     --lcd-width: 160px;
     --lcd-height: 144px;
+    --shell-width: calc(400px * var(--scale));
+    --shell-height: calc(630px * var(--scale));
 }
 
 body {
@@ -102,6 +104,28 @@ body {
     padding-right: calc(0.25rem * var(--scale));
 }
 
+.gameboy-wrap {
+    --responsive-scale: min(
+        1,
+        calc((100vw - 32px) / var(--shell-width)),
+        calc((100vh - 200px) / var(--shell-height))
+    );
+    position: relative;
+    width: calc(var(--shell-width) * var(--responsive-scale));
+    height: calc(var(--shell-height) * var(--responsive-scale));
+    margin: 0 auto;
+}
+
+.gameboy-scale {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--shell-width);
+    height: var(--shell-height);
+    transform: translateX(-50%) scale(var(--responsive-scale));
+    transform-origin: top center;
+}
+
 #legal-footer {
     text-align: center;
     color: #fff;
@@ -133,8 +157,8 @@ button {
 
 .frame {
     margin-top: calc(6px * var(--scale));
-    height: calc(630px * var(--scale));
-    width: calc(400px * var(--scale));
+    height: var(--shell-height);
+    width: var(--shell-width);
     border-radius: calc(10px * var(--scale)) calc(10px * var(--scale)) calc(30px * var(--scale)) calc(10px * var(--scale));
     background-color: var(--gameboyShell);
 }
@@ -148,7 +172,7 @@ button {
 
 .offOnContainer {
     position: relative;
-    width: calc(400px * var(--scale));
+    width: var(--shell-width);
 }
 
 .offOnButton {

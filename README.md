@@ -10,7 +10,7 @@ A static, pixel-accurate-ish recreation of the original Nintendo Game Boy (DMG-0
 
 ## Tech Stack
 - HTML + CSS + vanilla JavaScript
-- CDN assets: Bootstrap 4, Font Awesome, Google Fonts
+- CDN assets: Google Fonts
 
 ## Run Locally
 1. Open `index.html` in a browser.
@@ -28,7 +28,9 @@ Then visit `http://localhost:8000`.
 - `img/` - Image assets used by the display
 
 ## Notes
-- Fonts and icons are loaded from CDNs; you will need a network connection for those resources.
+- Fonts are loaded from Google Fonts; you will need a network connection for those resources.
+- The LCD is rendered at the original 160x144 resolution, with the shell scaled to fit the viewport.
+- Navigation is intentionally D-pad/keyboard only (no touchscreen input).
 - API calls to `/pokemon/random` persist by default. To make stateless calls, pass `persist: false` in `fetchRandomPokemon` or append `persist=false` to the request.
 
 ## Dev Menu
