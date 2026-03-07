@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.21] - 2026-03-07
+### Changed
+- Set the LCD display to the original Game Boy resolution (160x144).
+- Scaled shell and control layout to match the 1:1 LCD sizing.
+- Scaled LCD UI typography and spacing to match the smaller screen.
+
 ## [0.0.20] - 2026-03-07
 ### Changed
 - Guarded control bindings when required UI elements are missing.

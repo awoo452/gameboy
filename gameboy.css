@@ -4,6 +4,7 @@
 }
 
 :root {
+    --scale: 0.7;
     --gameboyScreen: rgb(100, 100, 100);
     --gameboyShell: rgb(200, 200, 200);
     --offOn: rgb(175, 175, 175);
@@ -33,6 +34,8 @@
     --lcdText: rgb(20, 24, 16);
     --lcdDim: rgba(20, 24, 16, 0.6);
     --lcdBorder: rgba(20, 24, 16, 0.35);
+    --lcd-width: 160px;
+    --lcd-height: 144px;
 }
 
 body {
@@ -43,8 +46,8 @@ body {
 
 .container-fluid {
     width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: calc(15px * var(--scale));
+    padding-right: calc(15px * var(--scale));
 }
 
 .row {
@@ -68,11 +71,11 @@ body {
 }
 
 .mt-4 {
-    margin-top: 1.5rem;
+    margin-top: calc(1.5rem * var(--scale));
 }
 
 .mt-3 {
-    margin-top: 1rem;
+    margin-top: calc(1rem * var(--scale));
 }
 
 .mt-0 {
@@ -80,11 +83,11 @@ body {
 }
 
 .mb-3 {
-    margin-bottom: 1rem;
+    margin-bottom: calc(1rem * var(--scale));
 }
 
 .mb-1 {
-    margin-bottom: 0.25rem;
+    margin-bottom: calc(0.25rem * var(--scale));
 }
 
 .mb-0 {
@@ -92,11 +95,11 @@ body {
 }
 
 .pl-1 {
-    padding-left: 0.25rem;
+    padding-left: calc(0.25rem * var(--scale));
 }
 
 .pr-1 {
-    padding-right: 0.25rem;
+    padding-right: calc(0.25rem * var(--scale));
 }
 
 #legal-footer {
@@ -129,29 +132,29 @@ button {
     /* ----- GAMEBOY SHELL ----- */
 
 .frame {
-    margin-top: 6px;
-    height: 630px;
-    width: 400px;
-    border-radius: 10px 10px 30px 10px;
+    margin-top: calc(6px * var(--scale));
+    height: calc(630px * var(--scale));
+    width: calc(400px * var(--scale));
+    border-radius: calc(10px * var(--scale)) calc(10px * var(--scale)) calc(30px * var(--scale)) calc(10px * var(--scale));
     background-color: var(--gameboyShell);
 }
 
 .topLines {
     display: flex;
-    border-left: 3px var(--topLines) solid;
-    border-right: 3px var(--topLines) solid;
-    height: 15px;
+    border-left: calc(3px * var(--scale)) var(--topLines) solid;
+    border-right: calc(3px * var(--scale)) var(--topLines) solid;
+    height: calc(15px * var(--scale));
 }
 
 .offOnContainer {
     position: relative;
-    width: 400px;
+    width: calc(400px * var(--scale));
 }
 
 .offOnButton {
     position: absolute;
-    height: 6px;
-    width: 10px;
+    height: calc(6px * var(--scale));
+    width: calc(10px * var(--scale));
     background-color: var(--offOn);
     -webkit-appearance: none;
     appearance: none;
@@ -168,19 +171,19 @@ button {
 }
 
 .on {
-    margin-left: 65px;
+    margin-left: calc(65px * var(--scale));
 }
 
 .off {
-    margin-left: 45px;
+    margin-left: calc(45px * var(--scale));
 }
 
 .offOn {
-    width: 50px;
-    height: 13px;
+    width: calc(50px * var(--scale));
+    height: calc(13px * var(--scale));
     background-color: var(--offOn);
-    border: 1px var(--offOnBorder) solid;
-    border-radius: 6px;
+    border: calc(1px * var(--scale)) var(--offOnBorder) solid;
+    border-radius: calc(6px * var(--scale));
     display: flex; 
     justify-content: center;
     align-items: center;
@@ -189,9 +192,9 @@ button {
 
 .offOnLetters {
     color: var(--offOnText);
-    font-size: 6px;
+    font-size: calc(6px * var(--scale));
     line-height: 1;
-    letter-spacing: 0.3px;
+    letter-spacing: calc(0.3px * var(--scale));
     text-align: center;
     margin-bottom: 0;
     display: inline-flex;
@@ -207,27 +210,27 @@ button {
 }
 
 .caret-left {
-    border-width: 4px 6px 4px 0;
+    border-width: calc(4px * var(--scale)) calc(6px * var(--scale)) calc(4px * var(--scale)) 0;
     border-color: transparent var(--dPadCaret) transparent transparent;
 }
 
 .caret-right {
-    border-width: 4px 0 4px 6px;
+    border-width: calc(4px * var(--scale)) 0 calc(4px * var(--scale)) calc(6px * var(--scale));
     border-color: transparent transparent transparent var(--dPadCaret);
 }
 
 .caret-up {
-    border-width: 0 5px 7px 5px;
+    border-width: 0 calc(5px * var(--scale)) calc(7px * var(--scale)) calc(5px * var(--scale));
     border-color: transparent transparent var(--dPadCaret) transparent;
 }
 
 .caret-down {
-    border-width: 7px 5px 0 5px;
+    border-width: calc(7px * var(--scale)) calc(5px * var(--scale)) 0 calc(5px * var(--scale));
     border-color: var(--dPadCaret) transparent transparent transparent;
 }
 
 .offOnLetters .caret {
-    margin: 0 2px;
+    margin: 0 calc(2px * var(--scale));
     transform: scale(0.65);
 }
 
@@ -240,7 +243,7 @@ button {
 }
 
 .topLine {
-    height: 2px;
+    height: calc(2px * var(--scale));
     background-color: var(--topLines);
     width: 100%;
 }
@@ -249,22 +252,22 @@ button {
 
 /* ----- SCREEN ----- */
 .screen {
-    width: 330px;
-    height: 270px;
-    border-radius: 5px 5px 30px 5px;
-    border: 1px solid black;
+    width: calc(330px * var(--scale));
+    height: calc(270px * var(--scale));
+    border-radius: calc(5px * var(--scale)) calc(5px * var(--scale)) calc(30px * var(--scale)) calc(5px * var(--scale));
+    border: calc(1px * var(--scale)) solid black;
     background-color: var(--gameboyScreen);
 }
 
 .dotMatrix {
     position: absolute;
-    margin-top: 13px;
-    margin-left: 159px;
+    margin-top: calc(13px * var(--scale));
+    margin-left: calc(159px * var(--scale));
     background-color: var(--gameboyScreen);
 }
 
 .dotMatrixText {
-    font-size: 10px;
+    font-size: calc(10px * var(--scale));
     color: white;
     display: block;
 }
@@ -272,19 +275,19 @@ button {
 .matrixLineTop {
     width: 90%;
     background-color: var(--matrixLineTop);
-    height: 1px;
+    height: calc(1px * var(--scale));
 }
 
 .matrixLineBottom {
     width: 90%;
     background-color: var(--matrixLineBottom);
-    height: 1px;
+    height: calc(1px * var(--scale));
 }
 
 .batteryContainer {
     position: absolute;
-    margin-top: 70px;
-    width: 45px;
+    margin-top: calc(70px * var(--scale));
+    width: calc(45px * var(--scale));
     display: flex;
     flex-wrap: wrap;
     flex-basis: 100%;
@@ -293,15 +296,15 @@ button {
 
 .batteryLightContainer {
     display: flex;
-    width: 45px;
+    width: calc(45px * var(--scale));
     flex: 100%;
     justify-content: center;
-    margin-bottom: 3px;
+    margin-bottom: calc(3px * var(--scale));
 }
 
 .batteryLight {
-    height: 6px;
-    width: 6px;
+    height: calc(6px * var(--scale));
+    width: calc(6px * var(--scale));
     background-color: var(--batteryLightOff);
     border-radius: 50%;
 }
@@ -315,7 +318,7 @@ button {
 }
 
 .batteryText {
-    font-size: 10.5px;
+    font-size: calc(10.5px * var(--scale));
     color: white;
     display: block;
 }
@@ -323,8 +326,8 @@ button {
 /* ----- DISPLAY ----- */
 
 .display {
-    width: 240px;
-    height: 200px;
+    width: var(--lcd-width);
+    height: var(--lcd-height);
     margin: auto;
     position: relative;
     overflow: hidden;
@@ -354,7 +357,7 @@ button {
       padding-top: 0px;
     }
     to {
-      padding-top: 85px;
+      padding-top: 60px;
     }
   }
 
@@ -371,14 +374,14 @@ button {
 .screenContent {
     position: absolute;
     inset: 0;
-    padding: 12px 12px 10px;
+    padding: calc(12px * var(--scale)) calc(12px * var(--scale)) calc(10px * var(--scale));
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: calc(6px * var(--scale));
     color: var(--lcdText);
     font-family: 'Press Start 2P', monospace;
-    font-size: 8px;
-    letter-spacing: 0.4px;
+    font-size: calc(8px * var(--scale));
+    letter-spacing: calc(0.4px * var(--scale));
     text-transform: uppercase;
 }
 
@@ -386,7 +389,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 8px;
+    font-size: calc(8px * var(--scale));
 }
 
 .screenTitle {
@@ -395,15 +398,15 @@ button {
 
 .screenBadge {
     display: inline-block;
-    padding: 2px 4px;
-    border: 1px solid var(--lcdBorder);
+    padding: calc(2px * var(--scale)) calc(4px * var(--scale));
+    border: calc(1px * var(--scale)) solid var(--lcdBorder);
 }
 
 .menu,
 .navMenu {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: calc(4px * var(--scale));
     pointer-events: none;
 }
 
@@ -415,20 +418,20 @@ button {
     padding: 0;
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 8px;
+    gap: calc(6px * var(--scale));
+    font-size: calc(8px * var(--scale));
     text-align: left;
     cursor: pointer;
 }
 
 .menuItem:focus-visible,
 .navItem:focus-visible {
-    outline: 1px dashed var(--lcdText);
-    outline-offset: 2px;
+    outline: calc(1px * var(--scale)) dashed var(--lcdText);
+    outline-offset: calc(2px * var(--scale));
 }
 
 .menuArrow {
-    width: 10px;
+    width: calc(10px * var(--scale));
     visibility: hidden;
 }
 
@@ -438,7 +441,7 @@ button {
 }
 
 .statusRow {
-    min-height: 20px;
+    min-height: calc(20px * var(--scale));
 }
 
 .statusText {
@@ -456,15 +459,15 @@ button {
 .pokemonCard,
 .aboutCard {
     display: grid;
-    gap: 4px;
-    border-top: 1px solid var(--lcdBorder);
-    padding-top: 6px;
+    gap: calc(4px * var(--scale));
+    border-top: calc(1px * var(--scale)) solid var(--lcdBorder);
+    padding-top: calc(6px * var(--scale));
 }
 
 .pokemonRow {
     display: flex;
     justify-content: space-between;
-    gap: 6px;
+    gap: calc(6px * var(--scale));
 }
 
 .rowLabel {
@@ -479,8 +482,8 @@ button {
     margin-top: auto;
     display: flex;
     justify-content: space-between;
-    gap: 6px;
-    font-size: 6px;
+    gap: calc(6px * var(--scale));
+    font-size: calc(6px * var(--scale));
     color: var(--lcdDim);
 }
 
@@ -489,14 +492,14 @@ button {
 }
 
 .controlsContainer {
-    width: 400px;
-    height: 297px;
+    width: calc(400px * var(--scale));
+    height: calc(297px * var(--scale));
 }
 
 .nintendoGameBoy {
-    max-width: 200px;
-    margin-left: 35px;
-    margin-top: 10px;
+    max-width: calc(200px * var(--scale));
+    margin-left: calc(35px * var(--scale));
+    margin-top: calc(10px * var(--scale));
 }
 
 
@@ -505,20 +508,20 @@ button {
 /* ----- D PAD ----- */
 .dPad {
     position: absolute;
-    height: 106px;
-    width: 106px;
-    margin-left: 39px;
-    margin-top: 39px;
+    height: calc(106px * var(--scale));
+    width: calc(106px * var(--scale));
+    margin-left: calc(39px * var(--scale));
+    margin-top: calc(39px * var(--scale));
 }
 
 .dPadUp {
     position: absolute;
-    height: 35px;
-    width: 26px;
+    height: calc(35px * var(--scale));
+    width: calc(26px * var(--scale));
     background-color: var(--dPad);
-    margin-left: 40px;
-    margin-top: 6px;
-    border-radius: 5px 5px 0 0;
+    margin-left: calc(40px * var(--scale));
+    margin-top: calc(6px * var(--scale));
+    border-radius: calc(5px * var(--scale)) calc(5px * var(--scale)) 0 0;
     display: flex;
     flex-wrap: wrap;
     align-content: space-evenly;
@@ -526,12 +529,12 @@ button {
 
 .dPadDown {
     position: absolute;
-    height: 35px;
-    width: 26px;
+    height: calc(35px * var(--scale));
+    width: calc(26px * var(--scale));
     background-color: var(--dPad);
-    margin-left: 40px;
-    margin-top: 65px;
-    border-radius: 0 0 5px 5px;
+    margin-left: calc(40px * var(--scale));
+    margin-top: calc(65px * var(--scale));
+    border-radius: 0 0 calc(5px * var(--scale)) calc(5px * var(--scale));
     display: flex;
     flex-wrap: wrap;
     align-content: space-evenly;
@@ -539,12 +542,12 @@ button {
 
 .dPadLeft {
     position: absolute;
-    height: 26px;
-    width: 35px;
+    height: calc(26px * var(--scale));
+    width: calc(35px * var(--scale));
     background-color: var(--dPad);
-    margin-top: 40px;
-    margin-left: 6px;
-    border-radius: 5px 0 0 5px;
+    margin-top: calc(40px * var(--scale));
+    margin-left: calc(6px * var(--scale));
+    border-radius: calc(5px * var(--scale)) 0 0 calc(5px * var(--scale));
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -552,48 +555,48 @@ button {
 
 .dPadRight {
     position: absolute;
-    height: 26px;
-    width: 35px;
+    height: calc(26px * var(--scale));
+    width: calc(35px * var(--scale));
     background-color: var(--dPad);
-    margin-left: 65px;
-    margin-top: 40px;
-    border-radius: 0 5px 5px 0;
+    margin-left: calc(65px * var(--scale));
+    margin-top: calc(40px * var(--scale));
+    border-radius: 0 calc(5px * var(--scale)) calc(5px * var(--scale)) 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
 .dPadCenter {
-    height: 25px;
-    width: 25px;
+    height: calc(25px * var(--scale));
+    width: calc(25px * var(--scale));
     background-color: var(--dPad);
-    margin-left: 41px;
-    margin-top: 41px;
+    margin-left: calc(41px * var(--scale));
+    margin-top: calc(41px * var(--scale));
 
 }
 
 .caretUpContainer {
     position: absolute;
-    margin-left: 47px;
-    margin-top: -15px;
+    margin-left: calc(47px * var(--scale));
+    margin-top: calc(-15px * var(--scale));
 }
 
 .caretDownContainer {
     position: absolute;
-    margin-left: 47px;
-    margin-top: 95px;
+    margin-left: calc(47px * var(--scale));
+    margin-top: calc(95px * var(--scale));
 }
 
 .caretLeftContainer {
     position: absolute;
-    margin-left: -5px;
-    margin-top: 40px;
+    margin-left: calc(-5px * var(--scale));
+    margin-top: calc(40px * var(--scale));
 }
 
 .caretRightContainer {
     position: absolute;
-    margin-left: 107px;
-    margin-top: 40px;
+    margin-left: calc(107px * var(--scale));
+    margin-top: calc(40px * var(--scale));
 }
 
 .caretUpContainer .caret,
@@ -612,10 +615,10 @@ button {
     flex-wrap: wrap;
     flex-basis: 100;
     justify-content: space-between;
-    margin-left: 145px;
-    margin-top: 150px;
-    height: 85px;
-    width: 110px;
+    margin-left: calc(145px * var(--scale));
+    margin-top: calc(150px * var(--scale));
+    height: calc(85px * var(--scale));
+    width: calc(110px * var(--scale));
     transform: rotate(-25deg);
 }
 
@@ -625,16 +628,16 @@ button {
 
 .selectButton {
     flex: 50%;
-    width: 45px;
-    height: 9px;
+    width: calc(45px * var(--scale));
+    height: calc(9px * var(--scale));
     margin: 0;
-    border-radius: 10px;
+    border-radius: calc(10px * var(--scale));
     background-color: var(--selectButton);
-    border: 2px solid var(--startButtonBorder);
+    border: calc(2px * var(--scale)) solid var(--startButtonBorder);
 }
 
 .selectText {
-    font-size: 10px;
+    font-size: calc(10px * var(--scale));
     text-align: center;
     color: var(--selectText);
     font-family: 'Syncopate', sans-serif;
@@ -642,22 +645,22 @@ button {
 }
 
 .start {
-    margin-top: 28px;
+    margin-top: calc(28px * var(--scale));
 }
 
 .startButton {
     flex: 50%;
     align-self: center;
-    width: 45px;
-    height: 9px;
+    width: calc(45px * var(--scale));
+    height: calc(9px * var(--scale));
     margin: 0;
-    border-radius: 10px;
+    border-radius: calc(10px * var(--scale));
     background-color: var(--startButton);
-    border: 2px solid var(--startButtonBorder);
+    border: calc(2px * var(--scale)) solid var(--startButtonBorder);
 }
 
 .startText {
-    font-size: 10px;
+    font-size: calc(10px * var(--scale));
     text-align: center;
     color: var(--startText);
     font-family: 'Syncopate', sans-serif;
@@ -668,9 +671,9 @@ button {
 
 .bAContainer {
     position: absolute;
-    margin-left: 260px;
-    margin-top: 57px;
-    width: 115px;
+    margin-left: calc(260px * var(--scale));
+    margin-top: calc(57px * var(--scale));
+    width: calc(115px * var(--scale));
     display: flex;
     transform: rotate(-25deg);
     flex-wrap: wrap;
@@ -683,10 +686,10 @@ button {
     display: flex;
     flex: 100%;
     justify-content: space-between;
-    margin-bottom: 10px;
-    padding: 5px;
-    border: 1px solid var(--shade);
-    border-radius: 50px;
+    margin-bottom: calc(10px * var(--scale));
+    padding: calc(5px * var(--scale));
+    border: calc(1px * var(--scale)) solid var(--shade);
+    border-radius: calc(50px * var(--scale));
 }
 
 .bContainer {
@@ -696,14 +699,14 @@ button {
 }
 
 .bButton {
-    height: 45px;
-    width: 45px;
+    height: calc(45px * var(--scale));
+    width: calc(45px * var(--scale));
     border-radius: 50%;
     background-color: var(--bButton);
 }
 
 .b {
-    font-size: 15px;
+    font-size: calc(15px * var(--scale));
     color: var(--b);
     font-family: 'Syncopate', sans-serif;
     display: block;
@@ -716,14 +719,14 @@ button {
 }
 
 .aButton {
-    height: 45px;
-    width: 45px;
+    height: calc(45px * var(--scale));
+    width: calc(45px * var(--scale));
     border-radius: 50%;
     background-color: var(--aButton);
 }
 
 .a {
-    font-size: 15px;
+    font-size: calc(15px * var(--scale));
     color: var(--a);
     font-family: 'Syncopate', sans-serif;
     display: block;
@@ -733,10 +736,10 @@ button {
 
 .speakerContainer {
     position: absolute;
-    margin-left: 259px;
-    margin-top: 198px;
-    width: 140px;
-    height: 80px;
+    margin-left: calc(259px * var(--scale));
+    margin-top: calc(198px * var(--scale));
+    width: calc(140px * var(--scale));
+    height: calc(80px * var(--scale));
     transform: rotate(-25deg);
     display: flex;
     justify-content: space-evenly;
@@ -746,9 +749,9 @@ button {
 .line {
     height: 90%;
     width: 6%;
-    border-radius: 5px;
+    border-radius: calc(5px * var(--scale));
     background-color: var(--speakerGroove);
-    border: 1px solid var(--speakerGrooveBorder);
+    border: calc(1px * var(--scale)) solid var(--speakerGrooveBorder);
 }
 
 .hole {
