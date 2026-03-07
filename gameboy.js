@@ -7,12 +7,12 @@ const screenContent = document.querySelector('#screenContent');
 const screenTitle = document.querySelector('#screenTitle');
 const screenBadge = document.querySelector('#screenBadge');
 const navMenu = document.querySelector('#navMenu');
-const navItems = Array.from(navMenu.querySelectorAll('.navItem'));
+const navItems = navMenu ? Array.from(navMenu.querySelectorAll('.navItem')) : [];
 const devNavItem = document.querySelector('#devNavItem');
 const menu = document.querySelector('#menu');
-const menuItems = Array.from(menu.querySelectorAll('.menuItem'));
+const menuItems = menu ? Array.from(menu.querySelectorAll('.menuItem')) : [];
 const devMenu = document.querySelector('#devMenu');
-const devMenuItems = Array.from(devMenu.querySelectorAll('.menuItem'));
+const devMenuItems = devMenu ? Array.from(devMenu.querySelectorAll('.menuItem')) : [];
 const statusText = document.querySelector('#statusText');
 const pokemonCard = document.querySelector('#pokemonCard');
 const aboutCard = document.querySelector('#aboutCard');
@@ -27,6 +27,34 @@ const dPadRight = document.querySelector('.dPadRight');
 const startButton = document.querySelector('.startButton');
 const aButton = document.querySelector('.aButton');
 const bButton = document.querySelector('.bButton');
+
+const uiReady = [
+    onOffButton,
+    batteryLight,
+    display,
+    nintendoLogoContainer,
+    nintendoLogo,
+    screenContent,
+    screenTitle,
+    screenBadge,
+    navMenu,
+    menu,
+    devMenu,
+    statusText,
+    pokemonCard,
+    aboutCard,
+    pokemonId,
+    pokemonName,
+    pokemonTypes,
+    pokemonHW,
+    dPadUp,
+    dPadDown,
+    dPadLeft,
+    dPadRight,
+    startButton,
+    aButton,
+    bButton
+].every(Boolean);
 
 const apiMeta = document.querySelector('meta[name="pokemon-api-base"]');
 const API_BASE_URL = (apiMeta && apiMeta.content ? apiMeta.content : 'http://localhost:3000').replace(/\/$/, '');
@@ -132,7 +160,12 @@ async function fetchJsonWithRetry(url, options = {}) {
             }
             return await response.json();
         } catch (error) {
-            if (attempt < RETRY_LIMIT) {
+            const shouldRetry = (
+                (error && error.name === 'AbortError') ||
+                (error instanceof ApiError && RETRYABLE_STATUS.has(error.status)) ||
+                error instanceof TypeError
+            );
+            if (attempt < RETRY_LIMIT && shouldRetry) {
                 attempt += 1;
                 await delay(delayMs);
                 delayMs = Math.round(delayMs * 1.6);
@@ -688,41 +721,45 @@ function nextScreen() {
     showNavMenu();
 }
 
-onOffButton.addEventListener('click', toggleOnOff);
+if (!uiReady) {
+    console.warn('[Gameboy] UI elements missing; skipping control bindings.');
+} else {
+    onOffButton.addEventListener('click', toggleOnOff);
 
-dPadUp.addEventListener('click', handleUp);
-dPadDown.addEventListener('click', handleDown);
-dPadLeft.addEventListener('click', handleLeft);
-dPadRight.addEventListener('click', handleRight);
-aButton.addEventListener('click', handleMenuSelect);
-startButton.addEventListener('click', handleMenuSelect);
-bButton.addEventListener('click', handleBack);
+    dPadUp.addEventListener('click', handleUp);
+    dPadDown.addEventListener('click', handleDown);
+    dPadLeft.addEventListener('click', handleLeft);
+    dPadRight.addEventListener('click', handleRight);
+    aButton.addEventListener('click', handleMenuSelect);
+    startButton.addEventListener('click', handleMenuSelect);
+    bButton.addEventListener('click', handleBack);
 
-document.addEventListener('keydown', (event) => {
-    if (!isOn()) {
-        return;
-    }
-    if (event.key === 'ArrowUp') {
-        handleUp();
-        return;
-    }
-    if (event.key === 'ArrowDown') {
-        handleDown();
-        return;
-    }
-    if (event.key === 'ArrowLeft') {
-        handleLeft();
-        return;
-    }
-    if (event.key === 'ArrowRight') {
-        handleRight();
-        return;
-    }
-    if (event.key === 'Enter' || event.key.toLowerCase() === 'a') {
-        handleMenuSelect();
-        return;
-    }
-    if (event.key.toLowerCase() === 'b' || event.key === 'Escape') {
-        handleBack();
-    }
-});
+    document.addEventListener('keydown', (event) => {
+        if (!isOn()) {
+            return;
+        }
+        if (event.key === 'ArrowUp') {
+            handleUp();
+            return;
+        }
+        if (event.key === 'ArrowDown') {
+            handleDown();
+            return;
+        }
+        if (event.key === 'ArrowLeft') {
+            handleLeft();
+            return;
+        }
+        if (event.key === 'ArrowRight') {
+            handleRight();
+            return;
+        }
+        if (event.key === 'Enter' || event.key.toLowerCase() === 'a') {
+            handleMenuSelect();
+            return;
+        }
+        if (event.key.toLowerCase() === 'b' || event.key === 'Escape') {
+            handleBack();
+        }
+    });
+}

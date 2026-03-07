@@ -23,8 +23,8 @@ Then visit `http://localhost:8000`.
 
 ## Project Structure
 - `index.html` - Markup for the Game Boy shell
-- `appname.css` - Styling and layout
-- `appname.js` - Power toggle + boot animation
+- `gameboy.css` - Styling and layout
+- `gameboy.js` - Power toggle + boot animation
 - `img/` - Image assets used by the display
 
 ## Notes

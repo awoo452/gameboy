@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
 
+## [0.0.20] - 2026-03-07
+### Changed
+- Guarded control bindings when required UI elements are missing.
+- Retries now only apply to retryable statuses, timeouts, or network failures.
+- Renamed `appname.css` to `gameboy.css` and `appname.js` to `gameboy.js`.
+
 ## [0.0.19] - 2026-03-07
 ### Changed
 - Added a responsive viewport meta tag.
