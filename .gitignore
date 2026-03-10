@@ -2,3 +2,4 @@
 *.zip
 css/*.map
 tmp/
+ai_dev_agent.py

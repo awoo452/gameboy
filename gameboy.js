@@ -1,3 +1,4 @@
+// --- UI Element Selectors ---
 const onOffButton = document.querySelector('#onOffButton');
 const batteryLight = document.querySelector('#batteryLight');
 const display = document.querySelector('#display');
@@ -28,6 +29,7 @@ const startButton = document.querySelector('.startButton');
 const aButton = document.querySelector('.aButton');
 const bButton = document.querySelector('.bButton');
 
+// --- UI Ready State Check ---
 const uiReady = [
     onOffButton,
     batteryLight,
@@ -56,6 +58,7 @@ const uiReady = [
     bButton
 ].every(Boolean);
 
+// --- API/Network Config & Error Codes ---
 const apiMeta = document.querySelector('meta[name="pokemon-api-base"]');
 const API_BASE_URL = (apiMeta && apiMeta.content ? apiMeta.content : 'http://localhost:3000').replace(/\/$/, '');
 
@@ -72,12 +75,14 @@ const ERROR_CODES = {
     UNAVAILABLE: { code: 'GB-005', reason: 'Service unavailable.' }
 };
 
+// --- Dev Menu Sequence ---
 const DEV_SEQUENCE = [
     { direction: 'left', count: 4 },
     { direction: 'up', count: 2 },
     { direction: 'down', count: 69 }
 ];
 
+// --- State Variables ---
 let bootTimeoutId = null;
 let screenTimeoutId = null;
 let selectedIndex = 0;
@@ -86,6 +91,7 @@ let devSequenceStep = 0;
 let devSequenceCount = 0;
 let devUnlocked = false;
 
+// --- Classes ---
 class ApiError extends Error {
     constructor(status, statusText) {
         super(`HTTP ${status}`);
@@ -95,6 +101,7 @@ class ApiError extends Error {
     }
 }
 
+// --- Power & Display Management ---
 function isOn() {
     return onOffButton.classList.contains('on');
 }
@@ -114,6 +121,22 @@ function turnOnDisplay() {
     display.classList.add('displayOn');
 }
 
+function turnOff() {
+    onOffButton.classList.add('off');
+    onOffButton.classList.remove('on');
+}
+
+function turnOffBatteryLight() {
+    batteryLight.classList.remove('batteryLightOn');
+    batteryLight.classList.add('batteryLightOff');
+}
+
+function turnOffDisplay() {
+    display.classList.remove('displayOn');
+    display.classList.add('displayOff');
+}
+
+// --- Boot Logo Animation ---
 function addDrop() {
     if (!isOn()) {
         return;
@@ -129,10 +152,29 @@ function startGame() {
     bootTimeoutId = setTimeout(addDrop, 500);
 }
 
+function removeInitialScreen() {
+    nintendoLogo.classList.add('hidden');
+    nintendoLogoContainer.classList.remove('drop');
+}
+
+// --- Timers ---
+function clearTimers() {
+    if (bootTimeoutId !== null) {
+        clearTimeout(bootTimeoutId);
+        bootTimeoutId = null;
+    }
+    if (screenTimeoutId !== null) {
+        clearTimeout(screenTimeoutId);
+        screenTimeoutId = null;
+    }
+}
+
+// --- Delay Utility ---
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// --- Network ---
 async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -176,42 +218,69 @@ async function fetchJsonWithRetry(url, options = {}) {
     }
 }
 
-function clearTimers() {
-    if (bootTimeoutId !== null) {
-        clearTimeout(bootTimeoutId);
-        bootTimeoutId = null;
-    }
-    if (screenTimeoutId !== null) {
-        clearTimeout(screenTimeoutId);
-        screenTimeoutId = null;
-    }
-}
-
-function turnOff() {
-    onOffButton.classList.add('off');
-    onOffButton.classList.remove('on');
-}
-
-function turnOffBatteryLight() {
-    batteryLight.classList.remove('batteryLightOn');
-    batteryLight.classList.add('batteryLightOff');
-}
-
-function turnOffDisplay() {
-    display.classList.remove('displayOn');
-    display.classList.add('displayOff');
-}
-
-function removeInitialScreen() {
-    nintendoLogo.classList.add('hidden');
-    nintendoLogoContainer.classList.remove('drop');
-}
-
+// --- Status & Error Helpers ---
 function setStatus(text, isError = false) {
     statusText.textContent = text;
     statusText.classList.toggle('is-error', isError);
 }
 
+function logError(details, error) {
+    const payload = {
+        code: details.code,
+        reason: details.reason
+    };
+    if (error instanceof ApiError) {
+        payload.status = error.status;
+        payload.statusText = error.statusText;
+    }
+    if (error && error.message) {
+        payload.message = error.message;
+    }
+    console.error(`[Gameboy] ${details.code}: ${details.reason}`, payload);
+}
+
+function getErrorDetails(error) {
+    if (error && error.name === 'AbortError') {
+        return ERROR_CODES.TIMEOUT;
+    }
+    if (error instanceof ApiError) {
+        if (error.status === 408) {
+            return ERROR_CODES.TIMEOUT;
+        }
+        if (error.status === 404) {
+            return ERROR_CODES.NOT_FOUND;
+        }
+        if (error.status === 429) {
+            return ERROR_CODES.RATE_LIMITED;
+        }
+        if (error.status === 503) {
+            return ERROR_CODES.UNAVAILABLE;
+        }
+        if (error.status >= 500) {
+            return ERROR_CODES.UNAVAILABLE;
+        }
+        return null;
+    }
+    const message = error && error.message ? String(error.message) : '';
+    if (message.toLowerCase().includes('failed to fetch')) {
+        return ERROR_CODES.NETWORK;
+    }
+    return null;
+}
+
+function formatErrorMessage(error) {
+    const details = getErrorDetails(error);
+    if (details) {
+        logError(details, error);
+        return `Error ${details.code}. Visit docs to troubleshoot.`;
+    }
+    if (error instanceof ApiError) {
+        return `API error (HTTP ${error.status}).`;
+    }
+    return 'Unexpected error. Try again.';
+}
+
+// --- Dev Unlock Sequence ---
 function unlockDevMenu() {
     devUnlocked = true;
     if (devNavItem) {
@@ -250,6 +319,7 @@ function registerDevInput(direction) {
     }
 }
 
+// --- Menu & Navigation ---
 function setSelectedIndex(index) {
     const items = getActiveMenuItems();
     if (items.length === 0) {
@@ -316,6 +386,24 @@ function showMenu() {
     setSelectedIndex(0);
 }
 
+function showDevMenu() {
+    currentScreen = 'dev';
+    if (screenTitle) {
+        screenTitle.textContent = 'DEV MENU';
+    }
+    if (screenBadge) {
+        screenBadge.textContent = 'DEV';
+    }
+    navMenu.classList.add('hidden');
+    menu.classList.add('hidden');
+    devMenu.classList.remove('hidden');
+    pokemonCard.classList.add('hidden');
+    aboutCard.classList.add('hidden');
+    setStatus('READY');
+    clearSelections();
+    setSelectedIndex(0);
+}
+
 function showLoading() {
     currentScreen = 'loading';
     navMenu.classList.add('hidden');
@@ -346,28 +434,11 @@ function showAbout() {
     setStatus('INFO');
 }
 
-function showDevMenu() {
-    currentScreen = 'dev';
-    if (screenTitle) {
-        screenTitle.textContent = 'DEV MENU';
-    }
-    if (screenBadge) {
-        screenBadge.textContent = 'DEV';
-    }
-    navMenu.classList.add('hidden');
-    menu.classList.add('hidden');
-    devMenu.classList.remove('hidden');
-    pokemonCard.classList.add('hidden');
-    aboutCard.classList.add('hidden');
-    setStatus('READY');
-    clearSelections();
-    setSelectedIndex(0);
-}
-
 function resetScreenState() {
     showNavMenu();
 }
 
+// --- Data Formatting ---
 function formatName(name) {
     if (!name) {
         return 'UNKNOWN';
@@ -395,6 +466,7 @@ function formatHeightWeight(height, weight) {
     return `${heightValue} ${weightValue}`;
 }
 
+// --- Rendering ---
 function renderPokemon(data) {
     const id = data && (data.id || data.external_id);
     pokemonId.textContent = id ? String(id).padStart(3, '0') : '---';
@@ -403,62 +475,7 @@ function renderPokemon(data) {
     pokemonHW.textContent = formatHeightWeight(data && data.height, data && data.weight);
 }
 
-function logError(details, error) {
-    const payload = {
-        code: details.code,
-        reason: details.reason
-    };
-    if (error instanceof ApiError) {
-        payload.status = error.status;
-        payload.statusText = error.statusText;
-    }
-    if (error && error.message) {
-        payload.message = error.message;
-    }
-    console.error(`[Gameboy] ${details.code}: ${details.reason}`, payload);
-}
-
-function getErrorDetails(error) {
-    if (error && error.name === 'AbortError') {
-        return ERROR_CODES.TIMEOUT;
-    }
-    if (error instanceof ApiError) {
-        if (error.status === 408) {
-            return ERROR_CODES.TIMEOUT;
-        }
-        if (error.status === 404) {
-            return ERROR_CODES.NOT_FOUND;
-        }
-        if (error.status === 429) {
-            return ERROR_CODES.RATE_LIMITED;
-        }
-        if (error.status === 503) {
-            return ERROR_CODES.UNAVAILABLE;
-        }
-        if (error.status >= 500) {
-            return ERROR_CODES.UNAVAILABLE;
-        }
-        return null;
-    }
-    const message = error && error.message ? String(error.message) : '';
-    if (message.toLowerCase().includes('failed to fetch')) {
-        return ERROR_CODES.NETWORK;
-    }
-    return null;
-}
-
-function formatErrorMessage(error) {
-    const details = getErrorDetails(error);
-    if (details) {
-        logError(details, error);
-        return `Error ${details.code}. Visit docs to troubleshoot.`;
-    }
-    if (error instanceof ApiError) {
-        return `API error (HTTP ${error.status}).`;
-    }
-    return 'Unexpected error. Try again.';
-}
-
+// --- Fetch Handlers ---
 async function fetchRandomPokemon(options = {}) {
     const range = options.range || 'all';
     showLoading();
@@ -591,7 +608,7 @@ async function triggerNotFound() {
     }
 }
 
-
+// --- Controls / User Inputs ---
 function handleMenuSelect() {
     if (!isOn()) {
         return;
@@ -691,6 +708,7 @@ function handleRight() {
     registerDevInput('right');
 }
 
+// --- Power toggle handler and boot ---
 function toggleOnOff() {
     if (onOffButton.classList.contains('off')) {
         clearTimers();
@@ -711,6 +729,7 @@ function toggleOnOff() {
     }
 }
 
+// --- Post-logo screen transition ---
 function nextScreen() {
     if (!isOn()) {
         return;
@@ -721,6 +740,7 @@ function nextScreen() {
     showNavMenu();
 }
 
+// --- Main UI Bindings ---
 if (!uiReady) {
     console.warn('[Gameboy] UI elements missing; skipping control bindings.');
 } else {
@@ -738,28 +758,31 @@ if (!uiReady) {
         if (!isOn()) {
             return;
         }
-        if (event.key === 'ArrowUp') {
-            handleUp();
-            return;
-        }
-        if (event.key === 'ArrowDown') {
-            handleDown();
-            return;
-        }
-        if (event.key === 'ArrowLeft') {
-            handleLeft();
-            return;
-        }
-        if (event.key === 'ArrowRight') {
-            handleRight();
-            return;
-        }
-        if (event.key === 'Enter' || event.key.toLowerCase() === 'a') {
-            handleMenuSelect();
-            return;
-        }
-        if (event.key.toLowerCase() === 'b' || event.key === 'Escape') {
-            handleBack();
+        switch (event.key) {
+            case 'ArrowUp':
+                handleUp();
+                break;
+            case 'ArrowDown':
+                handleDown();
+                break;
+            case 'ArrowLeft':
+                handleLeft();
+                break;
+            case 'ArrowRight':
+                handleRight();
+                break;
+            case 'Enter':
+            case 'a':
+            case 'A':
+                handleMenuSelect();
+                break;
+            case 'b':
+            case 'B':
+            case 'Escape':
+                handleBack();
+                break;
+            default:
+                break;
         }
     });
 }
