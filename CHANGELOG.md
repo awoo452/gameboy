@@ -1,22 +1,22 @@
 # Changelog
-
 All notable changes to this project will be documented in this file.
 
-The format is based on Keep a Changelog, and this project adheres to Semantic Versioning.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/
+spec/v2.0.0.html).
 
+## [0.0.25] - 2026-03-14
+### Added
+- AI to take yore job.
 
 ## [0.0.24] - 2026-03-10
-
 ### Changed
 - Documentation updates brought to you by AI
 
 ## [0.0.23] - 2026-03-10
-
 ### Changed
 - add code section headers and reorganize functions for improved readability and maintainability
 
 ## [0.0.22] - 2026-03-07
-
 ### Changed
 - Added responsive shell scaling to fit the viewport while keeping the LCD at 1:1.
 - Documented the pixel-accurate LCD and non-touch controls.
